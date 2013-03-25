@@ -15,8 +15,8 @@
     (if (or (=? -p +p) (zero? fp))
       p
       (if (neg? fp)
-        (bisect f p +p =?)
-        (bisect f -p p =?)))))
+        (recur f p +p =?)
+        (recur f -p p =?)))))
 
 (defn make-bisector [tolerance]
   (letfn [(=? [x y] (< (abs (- x y)) tolerance))]
