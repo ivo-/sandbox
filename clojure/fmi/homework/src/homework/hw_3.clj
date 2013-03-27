@@ -34,3 +34,26 @@
       result)))
 
 ;;; ==================================
+
+(def ^:dynamic *cache-hit* nil)
+
+(defn cache [f]
+  (let [data (atom {})]
+    (fn [& args]
+      (let [bound  (thread-bound?  #'*cache-hit*)
+            cached (contains? @data args)]
+        (when       bound (set! *cache-hit* cached))
+        (when-not   cached
+          (swap! data #(assoc % args (apply f args))))
+        (@data args)))))
+
+;;; ==================================
+
+(defn annotated [f-var]
+  (let [meta-data (meta f-var)
+        get-meta  #(meta-data %)
+        has-meta? (partial contains? meta-data)]
+    (cond-> @f-var
+            (has-meta? :cached)  (cache)
+            (has-meta? :events)  (add-events  (get-meta :events))
+            (has-meta? :metrics) (add-metrics (get-meta :metrics)))))
