@@ -125,8 +125,7 @@ for the same key in coll of maps."
        :lazy-seqs   lazy-seqs
        :avg         (avg-of-colls vectors
                                   (mapv seq sets)
-                                  (mapv vals maps))
-       })))
+                                  (mapv vals maps))})))
 
 ;; Rules
 ;; ===========================
