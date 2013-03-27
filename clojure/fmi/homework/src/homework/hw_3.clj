@@ -2,9 +2,9 @@
 
 (def ^:dynamic *counter* (atom 0))
 
-(def reset-counter! #(reset! *counter* 0))
-(def count!         #(swap! *counter* inc))
-(def get-count      #(deref *counter*))
+(defn count!         [] (swap! *counter* inc))
+(defn get-count      [] (deref *counter*))
+(defn reset-counter! [] (reset! *counter* 0))
 
 ;;; ==================================
 
@@ -13,7 +13,7 @@
 
 (defn add-metrics [f fkey]
   (fn [& args]
-    (swap! calls-data #(update-in % [fkey args] safe-inc))
+    (swap! calls-data update-in [fkey args] safe-inc)
     (apply f args)))
 
 (defn calls [fkey & args]
@@ -40,20 +40,20 @@
 (defn cache [f]
   (let [data (atom {})]
     (fn [& args]
-      (let [bound  (thread-bound?  #'*cache-hit*)
+      (let [bound (thread-bound? #'*cache-hit*)
             cached (contains? @data args)]
-        (when       bound (set! *cache-hit* cached))
-        (when-not   cached
-          (swap! data #(assoc % args (apply f args))))
+        (when bound (set! *cache-hit* cached))
+        (when-not cached
+          (swap! data assoc args (apply f args)))
         (@data args)))))
 
 ;;; ==================================
 
 (defn annotated [f-var]
   (let [meta-data (meta f-var)
-        get-meta  #(meta-data %)
+        get-meta  (partial get meta-data)
         has-meta? (partial contains? meta-data)]
     (cond-> @f-var
-            (has-meta? :cached)  (cache)
-            (has-meta? :events)  (add-events  (get-meta :events))
+            (has-meta? :cached) (cache)
+            (has-meta? :events) (add-events (get-meta :events))
             (has-meta? :metrics) (add-metrics (get-meta :metrics)))))
