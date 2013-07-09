@@ -1,0 +1,16 @@
+# depslib dependency file v1.0
+1359485030 source:z:\dropbox\my\programing\c++\avl tree\main.cpp
+	<iostream>
+	<iomanip>
+	"AVLTree.cpp"
+
+1359486567 z:\dropbox\my\programing\c++\avl tree\avltree.cpp
+	"AVLTree.h"
+
+1359479371 z:\dropbox\my\programing\c++\avl tree\avltree.h
+	<iostream>
+	<iomanip>
+
+1359486567 source:z:\dropbox\my\programing\c++\avl tree\avltree.cpp
+	"AVLTree.h"
+
