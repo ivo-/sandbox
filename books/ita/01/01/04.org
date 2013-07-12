@@ -1,0 +1,19 @@
+#+TITLE: Exercise 1.2.4
+#+OPTIONS: tex:t toc:nil num:nil f:nil todo:nil author:nil email:nil
+#+OPTIONS: creator:nil d:nil timestamp:nil
+
+#+STYLE: <style>
+#+STYLE: h1.title {text-align: left; margin-left: 3%;}
+#+STYLE: p { margin: 0; padding 0; white-space: pre; }
+#+STYLE: section {  margin-left: 3%; }
+#+STYLE: blockquote { padding: 10px; border-left: 5px silver solid; font-weight:bold; }
+#+STYLE: </style>
+
+#+BEGIN_QUOTE
+How are the shortest-path and traveling-salesman problems given above
+similar? How are they different?
+#+END_QUOTE
+
+#+HTML: <section>
+{solution}
+#+HTML: </section>
