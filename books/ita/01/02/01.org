@@ -1,0 +1,21 @@
+#+TITLE: Exercise 1.2.1
+#+OPTIONS: tex:t toc:nil num:nil f:nil todo:nil author:nil email:nil
+#+OPTIONS: creator:nil d:nil timestamp:nil
+
+#+STYLE: <style>
+#+STYLE: h1.title {text-align: left; margin-left: 3%;}
+#+STYLE: p { margin: 0; padding 0; white-space: pre; }
+#+STYLE: section {  margin-left: 3%; }
+#+STYLE: blockquote { padding: 10px; border-left: 5px silver solid; font-weight:bold; }
+#+STYLE: </style>
+
+#+BEGIN_QUOTE
+Give an example of an application that requires algorithmic content at
+the application level, and discuss the function of the algorithms
+involved.
+#+END_QUOTE
+
+#+HTML: <section>
+Any application that requires authentication and authorization, rely
+on some cryptographic algorithms to secure users passwords.
+#+HTML: </section>
