@@ -1,0 +1,24 @@
+#+TITLE: Exercise 1.1.1
+#+OPTIONS: tex:t toc:nil num:nil f:nil todo:nil author:nil email:nil
+#+OPTIONS: creator:nil d:nil timestamp:nil
+
+#+STYLE: <style>
+#+STYLE: h1.title {text-align: left; margin-left: 3%;}
+#+STYLE: p { margin: 0; padding 0; white-space: pre; }
+#+STYLE: section {  margin-left: 3%; }
+#+STYLE: blockquote { padding: 10px; border-left: 5px silver solid; font-weight:bold; }
+#+STYLE: </style>
+
+#+BEGIN_QUOTE
+Give a real-world example that requires sorting or a real-world
+example that requires computing a convex hull.
+#+END_QUOTE
+
+#+HTML: <section>
+*1*.Sorting could be useful in shops when user wants to buy cheaper item
+of some kind.
+
+*2*.Computing a convex hull could be useful when eating apple. One wants to
+cut the smallest bad part of his apple removing all the infected area
+at once.
+#+HTML: </section>
