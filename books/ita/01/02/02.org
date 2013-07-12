@@ -1,0 +1,21 @@
+#+TITLE: Exercise 1.2.2
+#+OPTIONS: tex:t toc:nil num:nil f:nil todo:nil author:nil email:nil
+#+OPTIONS: creator:nil d:nil timestamp:nil
+
+#+STYLE: <style>
+#+STYLE: h1.title {text-align: left; margin-left: 3%;}
+#+STYLE: p { margin: 0; padding 0; white-space: pre; }
+#+STYLE: section {  margin-left: 3%; }
+#+STYLE: blockquote { padding: 10px; border-left: 5px silver solid; font-weight:bold; }
+#+STYLE: </style>
+
+#+BEGIN_QUOTE
+Suppose we are comparing implementations of insertion sort and merge sort on the
+same machine. For inputs of size $n$, insertion sort runs in $8n^2$ steps, while merge
+sort runs in $64n\lg n$ steps. For which values of $n$ does insertion sort beat merge
+sort?
+#+END_QUOTE
+
+#+HTML: <section>
+For values [1-42] insertion sort is faster.
+#+HTML: </section>
