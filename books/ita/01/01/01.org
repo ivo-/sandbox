@@ -18,7 +18,5 @@ example that requires computing a convex hull.
 *1*.Sorting could be useful in shops when user wants to buy cheaper item
 of some kind.
 
-*2*.Computing a convex hull could be useful when eating apple. One wants to
-cut the smallest bad part of his apple removing all the infected area
-at once.
+*2*.Computing a convex hull is used in 3D.
 #+HTML: </section>
