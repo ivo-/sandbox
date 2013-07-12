@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Problem 1.1</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="title" content="Problem 1.1"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2013-07-13 00:21:16 FLE Daylight Time"/>
+<meta name="author" content=""/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  html { font-family: Times, serif; font-size: 12pt; }
+  .title  { text-align: center; }
+  .todo   { color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #add8e6; font-weight:normal }
+  .target { }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
+  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
+  .center {margin-left:auto; margin-right:auto; text-align:center;}
+  p.verse { margin-left: 3% }
+  pre {
+        border: 1pt solid #AEBDCC;
+        background-color: #F3F5F7;
+        padding: 5pt;
+        font-family: courier, monospace;
+        font-size: 90%;
+        overflow:auto;
+  }
+  table { border-collapse: collapse; }
+  td, th { vertical-align: top;  }
+  th.right  { text-align:center;  }
+  th.left   { text-align:center;   }
+  th.center { text-align:center; }
+  td.right  { text-align:right;  }
+  td.left   { text-align:left;   }
+  td.center { text-align:center; }
+  dt { font-weight: bold; }
+  div.figure { padding: 0.5em; }
+  div.figure p { text-align: center; }
+  div.inlinetask {
+    padding:10px;
+    border:2px solid gray;
+    margin:10px;
+    background: #ffffcc;
+  }
+  textarea { overflow-x: auto; }
+  .linenr { font-size:smaller }
+  .code-highlighted {background-color:#ffff00;}
+  .org-info-js_info-navigation { border-style:none; }
+  #org-info-js_console-label { font-size:10px; font-weight:bold;
+                               white-space:nowrap; }
+  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
+                                 font-weight:bold; }
+  /*]]>*/-->
+</style>
+<style>
+h1.title {text-align: left; margin-left: 3%;}
+p { margin: 0; padding 0; white-space: pre; }
+section {  margin-left: 3%; }
+blockquote { padding: 10px; border-left: 5px silver solid; font-weight:bold; }
+</style>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/javascript" src="http://orgmode.org/mathjax/MathJax.js">
+<!--/*--><![CDATA[/*><!--*/
+    MathJax.Hub.Config({
+        // Only one of the two following lines, depending on user settings
+        // First allows browser-native MathML display, second forces HTML/CSS
+        //  config: ["MMLorHTML.js"], jax: ["input/TeX"],
+            jax: ["input/TeX", "output/HTML-CSS"],
+        extensions: ["tex2jax.js","TeX/AMSmath.js","TeX/AMSsymbols.js",
+                     "TeX/noUndefined.js"],
+        tex2jax: {
+            inlineMath: [ ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"], ["\\begin{displaymath}","\\end{displaymath}"] ],
+            skipTags: ["script","noscript","style","textarea","pre","code"],
+            ignoreClass: "tex2jax_ignore",
+            processEscapes: false,
+            processEnvironments: true,
+            preview: "TeX"
+        },
+        showProcessingMessages: true,
+        displayAlign: "center",
+        displayIndent: "2em",
+
+        "HTML-CSS": {
+             scale: 100,
+             availableFonts: ["STIX","TeX"],
+             preferredFont: "TeX",
+             webFont: "TeX",
+             imageFont: "TeX",
+             showMathMenu: true,
+        },
+        MMLorHTML: {
+             prefer: {
+                 MSIE:    "MML",
+                 Firefox: "MML",
+                 Opera:   "HTML",
+                 other:   "HTML"
+             }
+        }
+    });
+/*]]>*///-->
+</script>
+</head>
+<body>
+
+<div id="preamble">
+
+</div>
+
+<div id="content">
+<h1 class="title">Problem 1.1</h1>
+
+
+<blockquote>
+
+<p>For each function \(f(n)\) and time \(t\) in the following table, determine
+the largest size \(n\) of a problem that can be solved in time \(t\),
+assuming that the algorithm to solve the problem takes \(f(n)\)
+microseconds.
+</p>
+</blockquote>
+
+
+
+
+<section>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption></caption>
+<colgroup><col class="left" /><col class="left" /><col class="left" /><col class="left" /><col class="left" /><col class="left" /><col class="left" /><col class="left" />
+</colgroup>
+<thead>
+<tr><th scope="col" class="left"></th><th scope="col" class="left"><b>1 second</b></th><th scope="col" class="left"><b>1 minute</b></th><th scope="col" class="left"><b>1 hour</b></th><th scope="col" class="left"><b>1 day</b></th><th scope="col" class="left"><b>1 month</b></th><th scope="col" class="left"><b>1 year</b></th><th scope="col" class="left"><b>1 century</b></th></tr>
+</thead>
+<tbody>
+<tr><td class="left">\(\lg n\)</td><td class="left">\(2^{10^6}\)</td><td class="left">\(2^{6*10^7}\)</td><td class="left">\(2^{36*10^8}\)</td><td class="left">\(2^{864*10^8}\)</td><td class="left">\(2^{2592*10^9}\)</td><td class="left">\(2^{31536*10^9}\)</td><td class="left">\(2^{31536*10^{11}}\)</td></tr>
+<tr><td class="left">\(\sqrt{n}\)</td><td class="left">\((10^6)^2\)</td><td class="left">\((6*10^7)^2\)</td><td class="left">\((36*10^8)^2\)</td><td class="left">\((864*10^8)^2\)</td><td class="left">\((2592*10^9)^2\)</td><td class="left">\((31536*10^9)^2\)</td><td class="left">\((31536*10^{11})^2\)</td></tr>
+<tr><td class="left">\(n\)</td><td class="left">\({10^6}\)</td><td class="left">\({6*10^7}\)</td><td class="left">\({36*10^8}\)</td><td class="left">\({864*10^8}\)</td><td class="left">\({2592*10^9}\)</td><td class="left">\({31536*10^9}\)</td><td class="left">\({31536*10^{11}}\)</td></tr>
+<tr><td class="left">\(n \lg n\)</td><td class="left">\(62746\)</td><td class="left">\(2801420\)</td><td class="left">\(1.33378×10^8\)</td><td class="left">\(2.75515×10^9\)</td><td class="left">\(71870900000\)</td><td class="left">\(7.97634*10^{11}\)</td><td class="left">\(6.8611*10^{13}\)</td></tr>
+<tr><td class="left">\(n^2\)</td><td class="left">\({10^3}\)</td><td class="left">\(7745\)</td><td class="left">\(60000\)</td><td class="left">\(293938\)</td><td class="left">\(1609968\)</td><td class="left">\(5615690\)</td><td class="left">\(56156900\)</td></tr>
+<tr><td class="left">\(n^3\)</td><td class="left">\(100\)</td><td class="left">\(391\)</td><td class="left">\(1532\)</td><td class="left">\(4420\)</td><td class="left">\(13736\)</td><td class="left">\(31593\)</td><td class="left">\(146646\)</td></tr>
+<tr><td class="left">\(2^n\)</td><td class="left">\(19\)</td><td class="left">\(25\)</td><td class="left">\(31\)</td><td class="left">\(36\)</td><td class="left">\(41\)</td><td class="left">\(44\)</td><td class="left">\(51\)</td></tr>
+<tr><td class="left">\(n!\)</td><td class="left">\(9\)</td><td class="left">\(11\)</td><td class="left">\(12\)</td><td class="left">\(13\)</td><td class="left">\(15\)</td><td class="left">\(16\)</td><td class="left">\(17\)</td></tr>
+</tbody>
+</table>
+
+</section>
+</div>
+
+</body>
+</html>
