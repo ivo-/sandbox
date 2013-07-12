@@ -15,5 +15,9 @@ similar? How are they different?
 #+END_QUOTE
 
 #+HTML: <section>
-{solution}
+They are both aiming to find shortest paths, but in different
+situations. Shortest-path problem is more simple because it must find
+path between two points. Traveling-salesman on other hand must find
+shortest path which passes through the multiple points and ends back in
+the first one.
 #+HTML: </section>
