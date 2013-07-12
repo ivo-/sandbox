@@ -10,9 +10,10 @@
 #+STYLE: </style>
 
 #+BEGIN_QUOTE
-{task}
+Other than speed, what other measures of efficiency might one use in a
+real-world setting?
 #+END_QUOTE
 
 #+HTML: <section>
-{solution}
+We can measure memory usage.
 #+HTML: </section>
