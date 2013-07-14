@@ -10,6 +10,18 @@
 * I Foundations
 ** 1 The Role of Algorithms in Computing
 ** 2 Getting Started
+*** ASYMPTOTIC NOTATION
+    Notation used to describe how running time of algorithm increases
+    with increase of input data.
+*** Loop Invariant
+    Statement of conditions that should be true on entry into a loop
+    and that are guaranteed to remain true on every iteration of the
+    loop.
+
+    1. *Initialization* - It is true prior first iteration.
+    2. *Maintenance* - Each iteration maintains loop invariant.
+    3. *Termination* - When loop terminates, invariant can be used to
+       show that algorithm is correct.
 ** 3 Growth of Functions
 ** 4 Divide-and-Conquer
 ** 5 Probabilistic Analysis and Randomized Algorithms
