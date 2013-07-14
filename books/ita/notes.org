@@ -2,11 +2,9 @@
 -------
 
 #+BEGIN_COMMENT
-
-- *TODO*
-  + Simple web site.
-  + Write C test using assert in code.
-
+- *TODO* [0/2]
+  + [ ] Simple web site.
+  + [ ] Write C test using assert in code.
 #+END_COMMENT
 
 * I Foundations
