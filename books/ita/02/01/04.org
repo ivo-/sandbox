@@ -21,7 +21,7 @@ problem formally and write pseudocode for adding the two integers.
 BINARY_ADDITION(A,B,C)
 C[0] = 0
 for i = 1 to A.length
-  SUM = C[i]+A[i]+B[1]
+  SUM = C[i]+A[i]+B[i]
   C[i] = SUM%2
   C[i+1] = SUM/2
 #+END_SRC
