@@ -1,0 +1,50 @@
+#+TITLE: Exercise 2.1.3
+#+OPTIONS: tex:t toc:nil num:nil f:nil todo:nil author:nil email:nil
+#+OPTIONS: creator:nil d:nil timestamp:nil
+
+#+STYLE: <style>
+#+STYLE: h1.title {text-align: left; margin-left: 3%;}
+#+STYLE: p { margin: 0; padding 0; white-space: pre; }
+#+STYLE: section {  margin-left: 3%; }
+#+STYLE: blockquote { padding: 10px; border-left: 5px silver solid; font-weight:bold; }
+#+STYLE: </style>
+
+#+BEGIN_QUOTE
+Consider the *searching problem*:
+
+*Input*: A sequence of n numbers $A=\langle a_1, a_2, \ldots, a_n
+\rangle$ and a value $\nu$.
+*Output*: An index $i$ such that $\nu=A[i]$ or the special value *NIL*
+if $\nu$ does not appear in $A$.
+
+Write pseudocode for *linear search*, which scans through the
+sequence, looking for $\nu$. Using a loop invariant, prove that your
+algorithm is correct. Make sure that your loop invariant fulfills the
+three necessary properties.
+
+#+END_QUOTE
+
+#+HTML: <section>
+
+*LOOP INVARIANT*:
+   For each index of $A$ smaller than $i$ it is true that its key is
+   different form $\nu$.
+*INITIALIZATION*
+   $i$ is the first index, so loop invariant is satisfied.
+*MAINTENANCE*
+   Before each iteration, all the keys with indexes smaller than $i$
+   are checked for equality with $\nu$ and as we know loop is not
+   terminated. This means that non of the keys match $\nu$. After
+   iteration(if loop is still not terminated), we increase $i$ by one.
+   All keys with indexes $[1..i-1]$ are still checked and loop
+   invariant remains satisfied.
+*TERMINATION*
+   Loop termination can be caused in two ways.
+
+   When index $i$ is found and procedure returns it, which is a
+   correct result.
+
+   When $i=A.length+1$ and procedure returns NIL, which is also
+   correct result, because for each index $j<i$ it is true that
+   $A[j] \neq k$.
+#+HTML: </section>
