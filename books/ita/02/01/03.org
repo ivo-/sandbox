@@ -26,6 +26,14 @@ three necessary properties.
 
 #+HTML: <section>
 
+#+BEGIN_SRC C
+LINEAR SEARCH(A, v)
+for i = 1 to A.length
+  if A[i] == v
+    return i
+return NIL
+#+END_SRC
+
 *LOOP INVARIANT*:
    For each index of $A$ smaller than $i$ it is true that its key is
    different form $\nu$.
