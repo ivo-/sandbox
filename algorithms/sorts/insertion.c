@@ -1,5 +1,8 @@
 /*
  * Insertion sort
+ *
+ * O(n^2)
+ *
  */
 
 #include <stdio.h>
