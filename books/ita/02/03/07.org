@@ -17,6 +17,6 @@ two elements in S whose sum is exactly x.
 
 #+HTML: <section>
 If we sort S using merge sort and then check(using binary search) for
-each element $a$ if there is element $b=x-a$(from $x=a+b$). We will
-get time $T(n)=\theta(n\log{n}) + \theta{n\log{n}} = \theta(n\log{n})$.
+each element $a$ if there is element $b=x-a$. We will get time
+$T(n)=\theta(n\log{n}) + \theta{n\log{n}} = \theta(n\log{n})$.
 #+HTML: </section>
