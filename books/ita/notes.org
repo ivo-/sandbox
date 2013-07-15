@@ -4,7 +4,7 @@
 #+BEGIN_COMMENT
 - *TODO* [0/2]
   + [ ] Simple web site.
-  + [ ] Write C test using assert in code.
+  + [ ] Math appendix.
 #+END_COMMENT
 
 * I Foundations
