@@ -10,7 +10,7 @@
 * I Foundations
 ** 1 The Role of Algorithms in Computing
 ** 2 Getting Started
-*** ASYMPTOTIC NOTATION
+*** Asymptotic notation
     Notation used to describe how running time of algorithm increases
     with increase of input data.
 *** Loop Invariant
@@ -31,6 +31,15 @@
     How fast running time function grows for input size. This is the
     most determinant characteristic of running times and algorithms
     effectiveness.
+*** Divide-and-conquer
+    - *Divide* problems into subproblems.
+    - *Conquer* subproblems by solving them recursively or
+      straightforward if they are small enough.
+    - *Combine* solutions into bigger problem solution.
+*** Recurrence equations
+    Equations used to describe running times of recursive algorithms.
+    They describe overall running time on a problem of size n in terms
+    of running times of smaller inputs.
 ** 3 Growth of Functions
 ** 4 Divide-and-Conquer
 ** 5 Probabilistic Analysis and Randomized Algorithms
