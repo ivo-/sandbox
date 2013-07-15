@@ -3,7 +3,6 @@
 
 #+BEGIN_COMMENT
 - *TODO* [0/2]
-  + [ ] Simple web site.
   + [ ] Math appendix.
 #+END_COMMENT
 
