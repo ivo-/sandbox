@@ -22,6 +22,15 @@
     2. *Maintenance* - Each iteration maintains loop invariant.
     3. *Termination* - When loop terminates, invariant can be used to
        show that algorithm is correct.
+*** Size of input
+*** Running time
+    Number of primitive operations(steps) executed for particular
+    input. We can analyze best, average and (primary) worst case
+    running times.
+*** Order of growth
+    How fast running time function grows for input size. This is the
+    most determinant characteristic of running times and algorithms
+    effectiveness.
 ** 3 Growth of Functions
 ** 4 Divide-and-Conquer
 ** 5 Probabilistic Analysis and Randomized Algorithms
