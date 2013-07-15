@@ -18,5 +18,7 @@ of insertion sort to $n\lg{n}$?
 #+END_QUOTE
 
 #+HTML: <section>
-{solution}
+No. Worst case running time is $n^2$ even if search is with
+constant time, because if algorithm must set element in first place,
+it should perform n-1 steps to move other elements.
 #+HTML: </section>
