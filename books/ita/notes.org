@@ -2,7 +2,7 @@
 -------
 
 #+BEGIN_COMMENT
-- *TODO* [0/2]
+- *TODO* [0/1]
   + [ ] Math appendix.
 #+END_COMMENT
 
