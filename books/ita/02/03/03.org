@@ -23,7 +23,7 @@ is $T(n) = n\lg{n}$
 #+HTML: <section>
 Base
      $n = 2^1 = 2$ and $T(2) = 2$, then
-        $T(2) = 2.\lg{2} = 2.1 = 2$.
+        $T(2) = 2.\lg{2} = 2.1 = 2$
 Let
      $n=2^p$ and $T(2^p)=2^p\lg{2^p}$
 Then
