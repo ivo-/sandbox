@@ -4,16 +4,16 @@
 #include <stdio.h>
 #include <assert.h>
 
-int print_array(int A[], int n) {
+int print_array(int A[], int s, int n) {
   int i;
-  for (i=0; i<n; i++)
+  for (i = s; i < n; i++)
     printf("%d\n", A[i]);
 }
 
-int is_sorted(int A[], int n) {
+int is_sorted(int A[], int s, int n) {
   int i, j;
-  for (i=0; i<n; i++) {
-    for (j=i+1; j<n; j++) {
+  for (i = s; i < n; i++) {
+    for (j = i + 1; j < n; j++) {
       if (A[j] < A[i])
         return 0;
     }
