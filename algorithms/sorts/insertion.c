@@ -7,7 +7,7 @@
 
 #include <stdio.h>
 #include <assert.h>
-#include "../helpers.c"
+#include "_helpers.c"
 
 /* -----------------------------------------------------------------------------
  * Algorithm
@@ -37,7 +37,7 @@ void tests() {
   insertion(A, 0, 8);
   assert(is_sorted(A, 0, 8));
 
-  print_array(A, 0, 8);
+  /* print_array(A, 0, 8); */
 }
 
 int main() {
