@@ -6,14 +6,14 @@
 
 int print_array(int A[], int s, int n) {
   int i;
-  for (i = s; i < n; i++)
-    printf("%d\n", A[i]);
+  for (i = s; i <= n; i++)
+    printf("%d ", A[i]);
 }
 
 int is_sorted(int A[], int s, int n) {
   int i, j;
-  for (i = s; i < n; i++) {
-    for (j = i + 1; j < n; j++) {
+  for (i = s; i <= n; i++) {
+    for (j = i + 1; j <= n; j++) {
       if (A[j] < A[i])
         return 0;
     }

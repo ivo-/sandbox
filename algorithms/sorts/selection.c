@@ -13,13 +13,17 @@
  * Algorithm
  * -------------------------------------------------------------------------- */
 
+/*
+ * Sort elements in iterval [s..n]
+ */
 void selection(int A[], int s, int n) {
   int i, ii, j, k, temp;
 
-  for (i = s, ii = n - 1; i < ii; i++) {
+  /* NOTE: n is the index of last element */
+  for (i = s; i < n; i++) {
     k = i;
 
-    for (j = i + 1; j < n; j++) {
+    for (j = i + 1; j <= n; j++) {
       if (A[j] < A[k]) k = j;
     }
 
@@ -37,10 +41,10 @@ void selection(int A[], int s, int n) {
 
 void tests() {
   int A[8] = {4, 1, 32, 12, 17, 5, 1, 13};
-  selection(A, 0, 8);
-  assert(is_sorted(A, 0, 8));
+  selection(A, 0, 7);
+  assert(is_sorted(A, 0, 7));
 
-  /* print_array(A, 0, 8); */
+  /* print_array(A, 0, 7); */
 }
 
 int main() {
