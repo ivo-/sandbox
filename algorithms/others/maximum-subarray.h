@@ -19,17 +19,15 @@
  * -------------------------------------------------------------------------- */
 
 typedef struct {
-  int sum;
   int left;
   int right;
+  int sum;
 } tuple;
 
 tuple maximum_crossing_subarray(int A[], int low, int mid, int high) {
   int i, s;
-  tuple l, r, c;
-
-  l.sum = A[mid];
-  l.left = l.right = mid;
+  tuple l = {mid, mid, A[mid]},
+        r = {mid + 1, mid + 1, A[mid + 1]};
 
   for (i = l.left, s = 0; i >= low; i--) {
     s += A[i];
@@ -40,9 +38,6 @@ tuple maximum_crossing_subarray(int A[], int low, int mid, int high) {
     }
   }
 
-  r.sum = 0;
-  r.left = r.right = mid + 1;
-
   for (i = r.right, s = 0; i <= high; i++) {
     s += A[i];
 
@@ -52,10 +47,7 @@ tuple maximum_crossing_subarray(int A[], int low, int mid, int high) {
     }
   }
 
-  c.left = l.left;
-  c.right = r.right;
-  c.sum = l.sum + r.sum;
-
+  tuple c = {l.left, r.right, l.sum + r.sum};
   return c;
 }
 
