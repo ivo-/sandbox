@@ -1,3 +1,18 @@
+/*
+ * Maximum-subarray problem
+ * -----
+ *
+ *
+ *
+ */
+
+#include <stdlib.h>
+#include <string.h>
+
+/* -----------------------------------------------------------------------------
+ * Algorithm
+ * -------------------------------------------------------------------------- */
+
 /* It takes as input an array of numbers, and it determines the
  * contiguous subarray whose values have the greatest sum. */
 

@@ -2,7 +2,6 @@
 #define _H_HELPERS
 
 #include <stdio.h>
-#include <assert.h>
 
 int print_array(int A[], int s, int n) {
   int i;
