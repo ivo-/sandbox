@@ -2,7 +2,12 @@
  * Maximum-subarray problem
  * -----
  *
+ *   Maximum-subarray is contiguous subarray within a one-dimensional
+ * array of numbers which has the largest sum.
  *
+ *   Find maximum-subarray into array and calculate its sum. In this
+ * solution I use Divide-And-Conquer approach. Asymptotic running time
+ * of the algorithms is Ø(n.lg(n)).
  *
  */
 
@@ -13,32 +18,60 @@
  * Algorithm
  * -------------------------------------------------------------------------- */
 
-/* It takes as input an array of numbers, and it determines the
- * contiguous subarray whose values have the greatest sum. */
+typedef struct {
+  int sum;
+  int left;
+  int right;
+} tuple;
 
-/* Find maximum sub-arrays A[s..m], A[m+1..n] and A[m-i..m+1+j]
- * (i,j >= 0). One of them with bigger sum is the maximum subarray in
- * the whole A[s..n] array. */
+tuple maximum_crossing_subarray(int A[], int low, int mid, int high) {
+  int i, s;
+  tuple l, r, c;
 
-/* 1 if high == low */
-/* 2 return .low; high;AOElow/ // base case: only one element */
-/* 3 else mid D b.low C high/=2c */
-/* 4 .left-low; left-high; left-sum/ D */
-/* FIND-MAXIMUM-SUBARRAY.A; low; mid/ */
-/* 5 .right-low; right-high; right-sum/ D */
-/* FIND-MAXIMUM-SUBARRAY.A; mid C 1; high/ */
-/* 6 .cross-low; cross-high; cross-sum/ D */
-/* FIND-MAX-CROSSING-SUBARRAY.A; low; mid; high/ */
-/* 7 if left-sum  right-sum and left-sum  cross-sum */
-/* 8 return .left-low; left-high; left-sum/ */
-/* 9 elseif right-sum  left-sum and right-sum  cross-sum */
-/* 10 return .right-low; right-high; right-sum/ */
-/* 11 else return .cross-low; cross-high; cross-sum/ */
+  l.sum = A[mid];
+  l.left = l.right = mid;
 
-int *maximum_crossing_subarray(int A[], int low, int mid, int high) {
+  for (i = l.left, s = 0; i >= low; i--) {
+    s += A[i];
 
+    if (l.sum < s) {
+      l.sum = s;
+      l.left = i;
+    }
+  }
+
+  r.sum = 0;
+  r.left = r.right = mid + 1;
+
+  for (i = r.right, s = 0; i <= high; i++) {
+    s += A[i];
+
+    if (r.sum < s) {
+      r.sum = s;
+      r.right = i;
+    }
+  }
+
+  c.left = l.left;
+  c.right = r.right;
+  c.sum = l.sum + r.sum;
+
+  return c;
 }
 
-int *maximum_subarray(int A[], int low, int high) {
+tuple maximum_subarray(int A[], int low, int high) {
+  if (low == high) {
+    tuple r = {low, high, A[low]};
+    return r;
+  }
 
+  int mid = (low + high)/2;
+
+  tuple l = maximum_subarray(A, low, mid);
+  tuple r = maximum_subarray(A, mid + 1, high);
+  tuple c = maximum_crossing_subarray(A, low, mid, high);
+
+  if (l.sum >= r.sum && l.sum >= c.sum) return l;
+  if (r.sum >= l.sum && r.sum >= c.sum) return r;
+  return c;
 }
