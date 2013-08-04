@@ -14,10 +14,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-/* -----------------------------------------------------------------------------
- * Algorithm
- * -------------------------------------------------------------------------- */
-
 typedef struct {
   int left;
   int right;
@@ -25,45 +21,45 @@ typedef struct {
 } tuple;
 
 tuple maximum_crossing_subarray(int A[], int low, int mid, int high) {
-  int i, s;
-  tuple l = {mid, mid, A[mid]},
-        r = {mid + 1, mid + 1, A[mid + 1]};
+  int i, sum;
+  tuple larr = {mid, mid, A[mid]};
+  tuple rarr = {mid + 1, mid + 1, A[mid + 1]};
 
-  for (i = l.left, s = 0; i >= low; i--) {
-    s += A[i];
+  for (i = larr.left, sum = 0; i >= low; i--) {
+    sum += A[i];
 
-    if (l.sum < s) {
-      l.sum = s;
-      l.left = i;
+    if (larr.sum < sum) {
+      larr.sum = sum;
+      larr.left = i;
     }
   }
 
-  for (i = r.right, s = 0; i <= high; i++) {
-    s += A[i];
+  for (i = rarr.right, sum = 0; i <= high; i++) {
+    sum += A[i];
 
-    if (r.sum < s) {
-      r.sum = s;
-      r.right = i;
+    if (rarr.sum < sum) {
+      rarr.sum = sum;
+      rarr.right = i;
     }
   }
 
-  tuple c = {l.left, r.right, l.sum + r.sum};
-  return c;
+  tuple carr = {larr.left, rarr.right, larr.sum + rarr.sum};
+  return carr;
 }
 
 tuple maximum_subarray(int A[], int low, int high) {
   if (low == high) {
-    tuple r = {low, high, A[low]};
-    return r;
+    tuple res = {low, high, A[low]};
+    return res;
   }
 
   int mid = (low + high)/2;
 
-  tuple l = maximum_subarray(A, low, mid);
-  tuple r = maximum_subarray(A, mid + 1, high);
-  tuple c = maximum_crossing_subarray(A, low, mid, high);
+  tuple larr = maximum_subarray(A, low, mid);
+  tuple rarr = maximum_subarray(A, mid + 1, high);
+  tuple carr = maximum_crossing_subarray(A, low, mid, high);
 
-  if (l.sum >= r.sum && l.sum >= c.sum) return l;
-  if (r.sum >= l.sum && r.sum >= c.sum) return r;
-  return c;
+  if (larr.sum >= rarr.sum && larr.sum >= carr.sum) return larr;
+  if (rarr.sum >= larr.sum && rarr.sum >= carr.sum) return rarr;
+  return carr;
 }
