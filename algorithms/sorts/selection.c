@@ -7,7 +7,7 @@
 
 #include <stdio.h>
 #include <assert.h>
-#include "_helpers.c"
+#include "../helpers.c"
 
 /* -----------------------------------------------------------------------------
  * Algorithm
