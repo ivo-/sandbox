@@ -31,13 +31,12 @@ subarr maximum_subarray(int A[], int low, int high) {
     return max_arr;
   }
 
-  unsigned i;
-
   subarr curr_max_arr = {low, low, A[low]};
   subarr right_max_arr = {low, low, A[low]};
 
+  unsigned i;
   for (i = 1; i <= high; i++) {
-    if (A[i] >= right_max_arr.sum && right_max_arr.sum < 0) {
+    if (A[i] > right_max_arr.sum && right_max_arr.sum < 0) {
       right_max_arr.left = i;
       right_max_arr.right = i;
       right_max_arr.sum = A[i];
