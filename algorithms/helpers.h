@@ -21,4 +21,10 @@ int is_sorted(int A[], int s, int n) {
   return 1;
 }
 
+void swap(int *a, int *b) {
+  int c = *a;
+  *a = *b;
+  *b = c;
+}
+
 #endif

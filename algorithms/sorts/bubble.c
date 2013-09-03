@@ -6,7 +6,7 @@
  */
 
 #include <stdio.h>
-#include "../helpers.c"
+#include "../helpers.h"
 
 /* -----------------------------------------------------------------------------
  * Algorithm
