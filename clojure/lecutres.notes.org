@@ -1,0 +1,18 @@
+# Modeling data well in Clojure puts the focus on values (and particularly
+# composite values), natural identifiers(auto generated), and sets and map.
+#
+# Synthetic identifiers are by definition artifacts of incidental complexity.
+#
+#
+# If we have cycles in order, our data to stay value, we must add indirection
+# layer that we can use to avoid cycles.
+#
+# We must fully embrace programing with values, to get the most out of
+# Clojure.
+
+
+# We should work with the real abstracitons cells and neighbors not indexes,
+# rows or columns.
+#
+# Sometimes changing data structures is enough to simplify the problem. By
+# proper choosing our data structures we can produce more generic code.
