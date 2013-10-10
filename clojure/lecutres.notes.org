@@ -1,18 +1,66 @@
+# Make lectures plan for 2013
+#
+# - Hello. And little about Clojure and environment.
+# - The magic about Lisp and lambda calculus. And what this will bing you, how
+#    your thinking should be changed. Philosophical.
+# - How programs should be structured with pure functions, values, state layer.
+# - Interactive development and what it gives you.
+# - Clojure community and smart people around it. Batteries included stack,
+#    core.logic, core.async(in concurrency), core.typed, leiningen, core.match.
+# - ClojureScript and the smart ideas behind it.
+
+#
+# Lisp slides and terminology. Functional programing basics.
+#
 # Modeling data well in Clojure puts the focus on values (and particularly
 # composite values), natural identifiers(auto generated), and sets and map.
 #
 # Synthetic identifiers are by definition artifacts of incidental complexity.
 #
-#
 # If we have cycles in order, our data to stay value, we must add indirection
-# layer that we can use to avoid cycles.
+# layer that we can use to avoid cycles.(build dom tree)
 #
 # We must fully embrace programing with values, to get the most out of
 # Clojure.
-
-
+#
+# Natural identifiers are opposed to synthetic or surrogate identifiers, where
+# the latter are usually strings or an artificially generated number, akin to
+# sequences or auto increments in databases or object references themselves in
+# most object-oriented languages. Thus, synthetic identifiers are by definition
+# artifacts of incidental complexity. Keep as little data for data as possible,
+# and let it describe itself.
+#
 # We should work with the real abstracitons cells and neighbors not indexes,
 # rows or columns.
 #
 # Sometimes changing data structures is enough to simplify the problem. By
 # proper choosing our data structures we can produce more generic code.
+#
+# Implement some sort relaying on not natural identifiers with Clojure relaying
+# on them and show how different it is. Something like Game of life example but
+# easier to understand. viscous.
+#
+# Avoid dealing or keeping identifiers to data. Deal with data using composition
+# of higher order functions and let data identify itself.
+#
+# Generally, when you find the code you are writing painful or awkward, you are
+# most certainly fighting the language, working against its grain. Chances are
+# that in such cases you’ll be able to find a more pleasant solution by
+# rethinking your data structures. As Brooks’s quote said, code follows from
+# data modeling, so pleasant Clojure code flows from good data representation,
+# which so often implies natural composite identifiers, sets, and maps.
+#
+# People seems to forget about sets.
+#
+# Give example how we can abstract by adding more higher order functions and
+# compare this to inheritance. Solutions that can be easily abstracted are often
+# functional than imperative solutions. Data structures should be abstracted
+# from solution and it will be good. Single thing should be abstracted with
+# single function.
+#
+# Give example for data transformation in solving problem. Functional is data
+# transformation, imperative is data synthesis.
+
+# About global state and sierra's workflow.
+#
+#
