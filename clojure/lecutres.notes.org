@@ -1,6 +1,17 @@
+# Talk to values, imputabilty, avoiding global state. Stefan knows it, but
+# others don't and it's exciting to find out as use. I saw in many projects
+# managing global state... isn't it all we fight against :) Lecture for good
+# functional design. Small pure functions and state layer.
+#
+# Anketa: kursove, regexp, concurency, so on
+#
 # Make lectures plan for 2013
 #
+# Какво аз намирам в clojure: кулутура(без гл стейт, values), concurrency, lisp,
+# repl, good decisions, хора(лицата)
+#
 # - Hello. And little about Clojure and environment.
+# - Emacs setup.
 # - The magic about Lisp and lambda calculus. And what this will bing you, how
 #    your thinking should be changed. Philosophical.
 # - How programs should be structured with pure functions, values, state layer.
@@ -8,6 +19,8 @@
 # - Clojure community and smart people around it. Batteries included stack,
 #    core.logic, core.async(in concurrency), core.typed, leiningen, core.match.
 # - ClojureScript and the smart ideas behind it.
+
+# More text on presentations people seems to use them to learn.
 
 #
 # Lisp slides and terminology. Functional programing basics.
@@ -64,3 +77,19 @@
 # About global state and sierra's workflow.
 #
 #
+# Zippers and task to realize tree with zipper. AVL zipper tree.
+# https://github.com/clojure/clojure/blob/master/src/clj/clojure/zip.clj
+#
+# How beautiful is that we can interchange (delay) and (future) and map and
+# record, ...
+# Example with: JSON and url reading
+#
+# Identity-state time model seems to have all the benefits from values and
+# immutability, but is capable to replace mutable state.
+# Clojure's approach on concurrency eliminates a whole category of bugs related
+# to concurrent programing, but doesn't lower the possibilities.
+# Reference types represent identities and data structures states.
+
+# When changing atoms or other reference types, don't apply modifications one by
+# one, this will allow other threads to see identity in inconsistent state. Use
+# functions composition instead. Don't violate principles.
