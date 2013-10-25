@@ -1,17 +1,18 @@
-;;; Writing multi-threaded programs is one of the most difficult things we will
-;;; face as programmers.
-;;;
-;;; DEADLOCKS - situation in which two or more competing actions
-;;; are each waiting for the other to finish, and thus neither ever does.
-;;;
-;;; RACE CONDITION - multiple threads try to access/change shared resource at
-;;; the same time(check-then-act).
-;;;
-;;; In which order should locks be acquired and released?
-;;; Does a reader have to acquire a lock to read a value another thread might be
-;;; writing to?
-;;; How can multithreaded programs that rely upon locks be comprehensively tested?
-;;;
+(ns exploring.concurrency
+  "Writing multi-threaded programs is one of the most difficult things we will
+  face as programmers.
+
+  DEADLOCKS - situation in which two or more competing actions
+  are each waiting for the other to finish, and thus neither ever does.
+
+  RACE CONDITION - multiple threads try to access/change shared resource at
+  the same time(check-then-act).
+
+  In which order should locks be acquired and released?
+  Does a reader have to acquire a lock to read a value another thread might be
+  writing to?
+  How can multithreaded programs that rely upon locks be comprehensively tested?")
+
 
 (comment
 
@@ -195,8 +196,163 @@
   ;;  - no manually use of locks or other low level synchronization primitives
   ;;  - no possibility of deadlocks
   ;;  - no possibility of livelocks
-  ;; This is made possible by Clojure's implementation of software transaction
+  ;; This is made possible by Clojure's implementation of software transactional
   ;; memory, which is used to manage all change applied to refs.
+  ;;
+  ;; Software transactional memory is any method for coordinating multiple
+  ;; concurent modification to a shared set of storage locations. It is
+  ;; simplification to concurrent programming just like garbage collection is
+  ;; simplification to memory management. It helps you avoid manual locks
+  ;; management.
+  ;;
+  ;; Each STM transaction ensures that the changes to refs are made:
+  ;;   - atomically => all or none
+  ;;   - consistently => changes must satisfy constrains or transaction fails
+  ;;   - in isolation => transaction doesn't affect states of involved refs
+  ;; outside itself during its execution. It uses internal snapshot.
+  ;;
+  (let [r (ref 1)
+        t (ref 2)
+        y (ref 3)]
+    ;; Establishes scope of a transaction. All ref modifications must happen
+    ;; into a transaction, the processing of which happens synchronously. The
+    ;; thread that initializes transaction will block until transaction passes.
+    ;; Similarly to atoms at the bottom is comapre and set for each changed ref
+    ;; and if at least one of them fails, whole transaction is retired. Nested
+    ;; (dosync) calls are joined into one transaction. Other threads can safely
+    ;; read the refs involved in transaction and this cannot block them.
+    (dosync
+     (alter r inc)   ;; compare-and-set
+     (ref-set y 4)   ;; compare-and-set
+
+     ;; May be used when functions changing value of ref are reorderable and we
+     ;; don't care about intermediate values, but only of the final one.
+     ;; In-transaction value it is possible never to be actual value. Function
+     ;; passed to commute will be called once again at the end with last value
+     ;; to produce committed value. It should never cause retry.
+     (commute t #(do (prn %) (inc %))))
+    [@r @t @y])
+
+  ;; Will throw error when used in transaction.
+  (defn unsafe []
+    (io! (println "writing to database...")))
+
+  ;; 1. No I/O in transactions.
+  ;; 2. Refs should hold immutable data.
+  ;; 3. Transactions should be small and fast in oreder to avoid retries.
+  ;; Live-lock strategies:
+  ;;
+  ;; 1. Barging - giving priority to older transactions.
+  ;; 2. Retry limit.
+  (dosync
+   @(future (dosync (ref-set t 0)))
+   (ref-set t 1))
+
   (let [r (ref 1)]
-    )
+    ;; Readers may retry
+    ;;
+    ;; Fore reference types deref is guaranteed to never block, but inside of
+    ;; transaction it may trigger a retry. If value for ref since beginning of
+    ;; the transaction is requested later, but then it is not in the history due
+    ;; to ref changes by other threads, it can be deliverd and this will trigger
+    ;; retry. History is limited and when ref is frequently updated such
+    ;; scenarios are possible. History size can be changed.
+    (future (dotimes [_ 500] (dosync (Thread/sleep 20) (alter r inc))))
+    @(future (dosync (print @r "|") (Thread/sleep 1000) @r))
+
+    (comment
+      ;; This will work perfectly. By increasing max-history, we ensure that
+      ;; there will be enough space for our in-transaction value to fill in, and
+      ;; by increasing min-history we ensure that our in-transaction value will
+      ;; be kept long enough for transaction to finish.
+      (let [(r (ref 1 :min-history 50 :max-history 100))]
+        (future (dotimes [_ 500] (dosync (Thread/sleep 20) (alter r inc))))
+        @(future (dosync (print @r "|") (Thread/sleep 1000) @r))))
+
+    ;; Workarounds that won't trigger retry.
+    (comment
+      @(future (dosync (print @r "|") (Thread/sleep 1000)))
+      @(future (dosync (let [c @r] (print c "|") (Thread/sleep 1000) c))))
+
+    [(ref-min-history r)
+     (ref-max-history r)
+     (ref-history-count r)
+     r])
+
+  ;; Ensure will make sure that ref is in last actual state during transaction.
+  ;; It will make transaction retry if ref value is changed by other thread.
+  (let [r (ref 1)
+        t (ref 1)]
+    (dosync (let [rr (ensure r)
+                  tt (ensure t)]
+              [rr tt])))
+
+  ;; Vars differ from other reference types in that their state changes are not
+  ;; managed in time, but they provide namespace global identities, that should
+  ;; be immutable(or we introduce global mutable state) or dynamically scoped.
+  ;;
+  ;; Evaluating a symbol normally results in looking for variable in current
+  ;; namespace and dereferencing it to obtain its value.
+  ;;
+  ;; All top level functions and values are stored in vars and defined using
+  ;; def special form. Def not only installs var into a namespace, but copies
+  ;; the meta-data found on the symbol provide for its name to var itself. This
+  ;; metadata may alter the behavior of the var.
+  (do
+    (def v
+      "Some not so useful variable."
+      10)
+    ;; Print docs to stdout.
+    (doc v)
+    [v  #'v @#'v])
+
+  ;; Private vars are accessible only by it's full name in other namespaces.
+  (do
+    (def ^:private p 10)
+    @#'p)
+
+  ;; Constant variable. All its uses(until it is redefined) will be in-lined.
+  (do
+    (def ^:const c 10)
+    @#'c)
+
+  ;; Dynamic vars allow gives us an opportunity to override the root binding of
+  ;; the var inside a (binding) form body only for current thread.
+  ;; It has a variety of uses. It's common to use it as extra implicit argument
+  ;; for functions. But reversed use is also very handy - funcions to provide
+  ;; multiple side channels of return values. See second example.
+  (do
+    (def ^:dynamic *d* 10)
+    (binding [*d* 20]
+      (prn *d*)
+      ;; Will not work.
+      (doto (Thread. #(prn *d*))
+        .start
+        .join)
+      ;; Clojure build-in primitives are smart.
+      (future (prn *d*))
+
+      ;; This will not work, if lazy seq is realized outside of the
+      ;; biniding body.
+      (map prn [*d*])
+
+      (binding [*d* 30]
+        (prn *d*)
+        (binding [*d* 40]
+          (prn *d*)))))
+
+  (do
+    (def ^:dynamic *response-code* nil)
+    (defn http-get
+      [url-string]
+      (let [conn (-> url-string java.net.URL. .openConnection)
+            response-code (.getResponseCode conn)]
+        (when (thread-bound? #'*response-code*)
+          (set! *response-code* response-code))
+        (when (not= 404 response-code) (-> conn .getInputStream slurp))))
+    (binding [*response-code* nil]
+      (let [content (http-get "http://google.com/bad-url")]
+        (println "Response code was:" *response-code*))))
+
+
   )

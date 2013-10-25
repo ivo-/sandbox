@@ -1,0 +1,17 @@
+
+* Do now [0/3]
+
+- [ ] Separate concurrency into smaller parts.
+- [ ] Fix lectures notes [/]
+  - [ ] Add lectures plan.
+  - [ ] Do course summary.
+- [ ] Fix namespaces.
+
+* Do later
+
+- [ ] Fix comments.
+- [ ] Re-factor code.
+
+* Do eventually
+
+- [ ] Tests

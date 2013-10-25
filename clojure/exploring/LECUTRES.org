@@ -93,3 +93,19 @@
 # When changing atoms or other reference types, don't apply modifications one by
 # one, this will allow other threads to see identity in inconsistent state. Use
 # functions composition instead. Don't violate principles.
+
+# Modern garbage collection implementations can enable programs to outperform
+# alternatives written using manual memory management in many contexts; and,
+# each time a new garbage collector implementation or optimization is added to
+# the JVM, every program everywhere benefits from it without any involvement
+# from individual programmers. The same dynamic has played out with Clojure’s
+# STM.
+
+# Clojure's STM is optimistically trying to reorder concurrent change operations
+# so they are applied serially.
+
+# Overtone and clojure bands.
+# Links for more on each presentation.
+# Talk a lot for architecture on functional program.
+
+# Edit deref retry section and add (let solution) this will generally improve performance.

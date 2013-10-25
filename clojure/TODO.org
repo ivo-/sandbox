@@ -1,2 +1,0 @@
-# Do leiningen project for exploration. Explore
-# OOP framework for clojure.
