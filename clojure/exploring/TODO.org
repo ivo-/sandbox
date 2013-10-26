@@ -1,11 +1,11 @@
 
-* Do now [0/3]
+* Do now [1/3]
 
+- [X] Fix namespaces.
 - [ ] Separate concurrency into smaller parts.
-- [ ] Fix lectures notes [/]
+- [ ] Fix lectures notes [0/2]
   - [ ] Add lectures plan.
   - [ ] Do course summary.
-- [ ] Fix namespaces.
 
 * Do later
 

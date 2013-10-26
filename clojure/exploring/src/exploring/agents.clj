@@ -74,6 +74,36 @@
                               (set-error-mode! the-agent :fail)))))
 
 
-  (let [a (agent 10)]
-    )
+  ;; Atoms, unlike other reference types, are perfectly capable to coordinate
+  ;; I/O and other blocking operations. Thanks to their semantics they are often
+  ;; an ideal construct for simplifying async processing involving I/O.
+  ;;
+  ;; Atoms serialize all actions send to them, and this way provide natural
+  ;; synchronization. Agent's state is a resource and each action will have
+  ;; guaranteed exclusive access to it. In this characteristic they remaind me
+  ;; to actors and is extremely useful for logging or synchronizing access to
+  ;; shared resource. Example application for this will be state logger.
+  ;;
+  ;; Other agents workflow can be one representing finite state machine. In this
+  ;; scenario we create a pool of agents. Each one of them is representing an
+  ;; instance of our finite state machine. In first state it pools data from
+  ;; shared state queue and in last state it persists data with other atoms. Any
+  ;; intermediate states are used for I/O or computations. We should implement
+  ;; state changer function too. There is super interesting example for this
+  ;; Clojure programing book.
+  (let [a (agent 10)
+        r (ref 10)]
+    ;; Actors are integrated with STM and actions send to them will be held
+    ;; until transaction is committed successfully.
+    (dosync
+     (alter r + 10)
+     (send-off a + @r))
+
+    ;; Nested send(-off)s are held until action is completed and will be
+    ;; interrupted on error or validation fail.
+    (send a (fn [v]
+              (send a + v)
+              *agent*
+              (+ v 10)))
+    @r)
   )

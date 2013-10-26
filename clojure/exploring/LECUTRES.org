@@ -109,3 +109,8 @@
 # Talk a lot for architecture on functional program.
 
 # Edit deref retry section and add (let solution) this will generally improve performance.
+#
+# Example when shared resource(log writer) is stored into agent and agent
+# semantics are used to coordinate access to it. fire-and-forget persistence mechanism
+
+# Show finite state machine example using atoms, but simplified.
