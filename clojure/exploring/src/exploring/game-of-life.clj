@@ -5,7 +5,7 @@
 ;;; 4. Each cell with two or three living neighbors lives.
 ;;; 5. Each died cell with exactly three living neighbors revives.
 
-(ns explore.game-of-life
+(ns exploring.game-of-life
   (:require [clojure.pprint :refer (pprint)]))
 
 (defn neighbors

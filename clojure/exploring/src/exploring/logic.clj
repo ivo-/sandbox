@@ -1,1 +1,2 @@
-;; core.logic.tests
+(ns exploring.logic
+  "Exploring core.logic.")

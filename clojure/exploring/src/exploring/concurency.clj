@@ -51,7 +51,8 @@
     ;; How beautiful is that we can interchange (delay) and (future).
 
     ;; Futures and agent use the same thread pool and this makes them more
-    ;; effective than creating new thread every time on need.
+    ;; effective than creating new thread every time on need. Futures use
+    ;; unbound thread pool suitable for I/O bound operations.
     )
 
   ;; Promises share many of the mechanisms in delays and futures. Promise can be

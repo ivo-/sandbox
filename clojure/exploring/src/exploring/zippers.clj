@@ -5,7 +5,8 @@
 ;;;
 ;;; * location in the tree, targeting specific node
 ;;;
-(ns explore.zippers
+(ns exploring.zippers
+  "TODO:"
   (:require [clojure.zip :as z]))
 
 (comment
