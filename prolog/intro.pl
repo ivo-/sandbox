@@ -16,9 +16,8 @@
 %%    ?- make.
 %%
 %% ----------------
-%% Notes
+%% Program
 %% ----------------
-%%
 %%
 
 likes(sam,Food) :-
@@ -47,6 +46,10 @@ italian(pizza).
 italian(spaghetti).
 
 
+%% ----------------
+%% Queries
+%% ----------------
+%%
 %% ?- likes(sam, X).               % Makes query.
 %% X = dahl ;
 %% X = kurma ;                     % ; or space  - requests next answer

@@ -1,0 +1,27 @@
+#+TITLE: Logic programing with Prolog
+#+STARTUP: showall
+
+* Summary
+
+  Logic programming is a programming paradigm based on mathematical logic. In
+  this paradigm the programmer specifies relationships among data values (this
+  constitutes a logic program) and then poses queries to the execution
+  environment (usually an interactive interpreter) in order to see whether
+  certain relationships hold.
+
+  Putting this in another way, a logic program, through explicit facts and
+  rules, defines a base of knowledge from which implicit knowledge can be extracted.
+
+  The Prolog execution environment doesn’t so much "compute" an answer, it
+  "deduces" an answer from the relation definitions at hand. Rather than being
+  given an expression to evaluate, the Prolog environment is given an expression
+  which it interprets as a question:
+
+    For what parameter values does the expression evaluate to true?
+
+  Prolog has not types. Identifiers starting with lower-case letters denote data
+  values (almost like values in an enumerated type) while all other identifiers
+  denote variables. Though the basic elements of Prolog are typeless, most
+  implementations have been enhanced to include character and integer values and
+  operations. Also, Prolog has mechanisms built in for describing tuples and
+  lists.
