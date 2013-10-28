@@ -1,6 +1,16 @@
 #+TITLE: Logic programing with Prolog
 #+STARTUP: showall
 
+* Resources
+** Prolog A Tutorial Introduction
+
+   James Lu
+   Jerud J. Mead
+
+   Computer Science Department
+   Bucknell University
+   Lewisburg, PA 17387
+
 * Summary
 
   Logic programming is a programming paradigm based on mathematical logic. In
