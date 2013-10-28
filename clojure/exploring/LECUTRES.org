@@ -114,3 +114,4 @@
 # semantics are used to coordinate access to it. fire-and-forget persistence mechanism
 
 # Show finite state machine example using atoms, but simplified.
+# Scheme in clojure macro example.
