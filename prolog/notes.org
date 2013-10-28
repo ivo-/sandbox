@@ -16,11 +16,11 @@
   Logic programming is a programming paradigm based on mathematical logic. In
   this paradigm the programmer specifies relationships among data values (this
   constitutes a logic program) and then poses queries to the execution
-  environment (usually an interactive interpreter) in order to see whether
-  certain relationships hold.
+  environment in order to see whether certain relationships hold.
 
   Putting this in another way, a logic program, through explicit facts and
-  rules, defines a base of knowledge from which implicit knowledge can be extracted.
+  rules, defines a base of knowledge from which implicit knowledge can be
+  extracted.
 
   The Prolog execution environment doesn’t so much "compute" an answer, it
   "deduces" an answer from the relation definitions at hand. Rather than being
@@ -35,3 +35,14 @@
   implementations have been enhanced to include character and integer values and
   operations. Also, Prolog has mechanisms built in for describing tuples and
   lists.
+
+* Prolog
+
+  Prolog is referred to as a *declarative language*. A Prolog program consists of
+  *facts* and *rules* which serve to define *relations*. Execution engine is
+  based on *unification* and *resolution*, a mechanism for recursively
+  extracting sets of data values implicit in the facts and rules of a program.
+
+** Facts and Rules
+
+   *Fact* is
