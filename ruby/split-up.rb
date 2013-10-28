@@ -1,7 +1,7 @@
 module Enumerable
   def split_up(n, step, pad, &block)
     each_slice(step)
-      .map { |part| (part < n ? part + pad : pad).take n }
+      .map { |part| (part.count < n ? part + pad : pad).take n }
       .each &block
 
     # concat(pad).take((count/step.to_f).ceil)
