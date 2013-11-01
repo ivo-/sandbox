@@ -28,7 +28,7 @@
 %% X = tandoori .                  % . or return - terminates request
 %%                                 %
 %%                                 % If Prolog cannot find more answers, it writes
-%%                                 % false.Prolog can also answer with error message.
+%%                                 % false. Prolog can also answer with error message.
 %%
 %% ----------------
 %% Program[1]
@@ -77,13 +77,15 @@ tedge(Node1,Node2) :-
 %%
 %%  edge(X,Y) :- tedge(X,Y).
 %%
-%% But this will cause infinite recursion for some queries. TODO: Why? Possibly
-%% because of the cycles in the graph?
+%% But this will cause infinite recursion for tedge predicate queries, because
+%% it will call itself recursively for edge.
 %%
 
 %% This is a recursive rule to define path in graph. First thing to note is when
 %% using two rules with the same head to define a predicate, they are in logical
 %% OR relation.
+%%
+%% This solution will give results endlessly if there are cycles in the graph.
 %%
 path(Node1, Node1).             % We add a fact to predicate definition to allow
                                 % paths of length 0.
