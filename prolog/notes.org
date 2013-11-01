@@ -119,20 +119,30 @@
    from the fact or head of the rule) and determining if there is a
    substitution which makes them the same.
 
+     edge(a,X) -> edge(Y,Z) (Y = a, Z = b) => possible unification
+
    *Resolution* happens when an atom of the query has been unified with the head
-    of the rule(fact). It replaces the body of the rule(or nothing, if fact) and
-    then applies the substitution for the new query.
+    of the rule(fact). It replaces the atom with the body of the rule(or
+    nothing, if fact) and then applies the substitution in order to produce the
+    new query.
 
     tedge(a,X) -> tedge(Node1,Node2) % unification (Node1 = a, X = Node2)
-    tedge(a,X) -> edge(a,SomeNode),edge(SomeNode,Node2) % substitution
+    tedge(a,X) -> edge(a,SomeNode),edge(SomeNode,X) % substitution
 
       edge(a,SomeNode) -> edge(a,b) % unification(SomeNode = b)
       edge(a,SomeNode) -> nothing   % substitution
 
-      edge(b,Node2) -> edge(b,d)    % unification(Node2 = d)
-      edge(b,Node2) -> nothing      % substitution
+      edge(b,X) -> edge(b,d)        % unification(X = d)
+      edge(b,X) -> nothing          % substitution
 
-    Resulting query is empty and we are done. At this point the substitution can
-    be determined. Notice that at no point has there been anything like a
-    traditional computation – just the unification to match up arguments (pass
-    parameters?) and the resolution to reform the query.
+    Resulting query is empty and we are done. The system found value for our
+    variable X. At this point the substitution can be determined. Notice that at
+    no point has there been anything like a traditional computation – just the
+    unification to match up arguments (pass parameters?) and the resolution to
+    reform the query.
+
+    *Backtracking* is process after query is finally reduced to empty query.
+     Prolog backtracks to the most recent unification to determine whether there
+     is another fact or rule with which unification can succeed. If there is, an
+     additional solution may be found. Backtracking continues until all possible
+     answers are determined.
