@@ -68,17 +68,71 @@
      *Atom* :- *Atom1*, *Atom2* % If Atom[1..n] is true then Atom is also true.
 
      tedge(Node1,Node2) :-
-      edge(Node1,SomeNode),
-      edge(SomeNode,Node2).
+       edge(Node1,SomeNode),
+       edge(SomeNode,Node2).
 
-   *Recursive rules*
+   *Recursive rules* can be used to express recurrent predicate definitions.
+
+     path(Node1, Node2) :-
+       edge(Node1, Node2).
+     path(Node1, Node2) :-
+       edge(Node1, SomeNode),
+       path(SomeNode, Node2).
 
 ** Queries
 
    We can send queries to predicates to extract some implicit information,
-   defined by facts and rules.
+   defined by facts and rules. A query represents a question to Prolog program.
 
-     ?- parent(c, lisp). % Check if constants satisfy the predicate.
-     ?- parent(c, X).    % Request possible values for variables.
-     ?- parent(X, c).    %
-     ?- parent(X, Y).    &
+     ?- parent(c, lisp). % Check if constants satisfy the predicate. This is a
+                         % "ground query" and we expect true/false answer.
+                         %
+     ?- parent(c, X).    % Request possible values for variables aka
+     ?- parent(X, c).    % "non-Ground" queries.
+     ?- parent(X, Y).    %
+
+     ?- parent(c, X), parent(X, c).
+
+** Computation
+
+*** Ground queries
+
+    In response to a ground query Prolog systems scans the program looking for
+    the rule or fact whit heads which matches the predicate in the query. This
+    search is always done top-bottom so the order of definitions matter. A match
+    is found if the parameters to the query are identical to those of the head
+    of a rule or if the corresponding parameter in the rule head is a variable.
+
+*** non-Ground queries
+
+    In response to non-ground query Prolog returns values for variables that
+    will produce satisfiable result when replaced in query in place of the
+    variable. Query is satisfiable relative to the program because there exists
+    substitution for its variable, which makes the query true. Query is resolved
+    by a series of substitutions walking trough the recursion tree and return
+    all found satisfiable results. Then we can choose Werther we want this
+    process to continue or currently found values are enough.
+
+** Unification and Resolution
+
+   *Unification* is the process of taking two atoms(on from the query and one
+   from the fact or head of the rule) and determining if there is a
+   substitution which makes them the same.
+
+   *Resolution* happens when an atom of the query has been unified with the head
+    of the rule(fact). It replaces the body of the rule(or nothing, if fact) and
+    then applies the substitution for the new query.
+
+    tedge(a,X) -> tedge(Node1,Node2) % unification (Node1 = a, X = Node2)
+    tedge(a,X) -> edge(a,SomeNode),edge(SomeNode,Node2) % substitution
+
+      edge(a,SomeNode) -> edge(a,b) % unification(SomeNode = b)
+      edge(a,SomeNode) -> nothing   % substitution
+
+      edge(b,Node2) -> edge(b,d)    % unification(Node2 = d)
+      edge(b,Node2) -> nothing      % substitution
+
+    Resulting query is empty and we are done. At this point the substitution can
+    be determined. Notice that at no point has there been anything like a
+    traditional computation – just the unification to match up arguments (pass
+    parameters?) and the resolution to reform the query.

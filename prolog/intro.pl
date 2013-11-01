@@ -77,7 +77,8 @@ tedge(Node1,Node2) :-
 %%
 %%  edge(X,Y) :- tedge(X,Y).
 %%
-%% But this will cause infinite recursion for some queries. TODO: Why?
+%% But this will cause infinite recursion for some queries. TODO: Why? Possibly
+%% because of the cycles in the graph?
 %%
 
 %% This is a recursive rule to define path in graph. First thing to note is when
