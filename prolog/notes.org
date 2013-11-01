@@ -29,13 +29,13 @@
 
     For what parameter values does the expression evaluate to true?
 
-  Prolog has not types. Though the basic elements of Prolog are typeless, most
+  Prolog has no types. Though the basic elements of Prolog are typeless, most
   implementations have been enhanced to include character and integer values and
   operations. Also, Prolog has mechanisms built in for describing tuples and
   lists.
 
-  *data-values* - identifiers that start with lower-case letters.
-  *variables*   - identifiers that start with upper-case letters.
+  *constants* - identifiers that start with lower-case letters.
+  *variables* - identifiers that start with upper-case letters.
 
 * Prolog
 
@@ -44,16 +44,28 @@
   based on *unification* and *resolution*, a mechanism for recursively
   extracting sets of data values implicit in the facts and rules of a program.
 
-** Facts and Rules
+** Fact
 
    *Fact* is statement, consisting of an *identifier* and *tuple of constants*.
    It describes *relation* - *identifier* is its name, and values tuple are it
    this relation. *Identifier* is also referred as *predicate* and tuple
    *satisfies* it *UNCONDITIONALLY*.
 
-     parent(Lisp, Clojure).
-     parent(Java, C).
+     parent(lisp, clojure). % Note the lower case used for constants.
+     parent(java, c).
+
+** Rule
 
    *Rule* is statement which gives ~conditions under which tuples satisfy a
    predicate~. In a sense a fact is just a special case of rule, where condition
    is always satisfied.
+
+     tedge(Node1,Node2) :-
+      edge(Node1,SomeNode),
+      edge(SomeNode,Node2).
+
+** Queries
+
+   We can request predicates
+   ?- parent(c, lisp).
+   ?- parent(c, X).

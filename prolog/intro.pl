@@ -22,14 +22,13 @@
 %% Queries
 %% ----------------
 %%
-%% ?- likes(sam, X).               % Makes query. We can only query in repl.
+%% ?- likes(sam, X).               % Makes query. We can only query in the repl.
 %% X = dahl ;                      %
 %% X = kurma ;                     % ; or space  - requests next answer
 %% X = tandoori .                  % . or return - terminates request
 %%                                 %
 %%                                 % If Prolog cannot find more answers, it writes
 %%                                 % false.Prolog can also answer with error message.
-%%
 %%
 %% ----------------
 %% Program[1]
@@ -54,11 +53,43 @@ tedge(Node1,Node2) :-
     edge(Node1,SomeNode),
     edge(SomeNode,Node2).
 
-%% Query our rule and see if constants "a" and "b" satisfy it.
-tedge(a,b).
+%% Query our rule and see if tuple of provided constants satisfy it. If we use
+%% constants that are not in the facts it will just return false not error.
+?- tedge(a,b). %= true
+?- tedge(a,d). %= true
+%% ?- tedge(a,e). %= false
+%% ?- tedge(a,k). %= false
 
 %% "," interprets as logical "AND".
-edge(a, b), edge(a, a), tedge(a,b).
+?- edge(a,b), edge(a,e), tedge(a,b). %= ture
+
+%% Wen we provide capitalized identifier it will denote a variable. Variables
+%% are used in queries to get the system to find all values which can be
+%% substituted to make the resulting predicate true.
+%% ?- tedge(a,X). %= X = d ;
+%%                %  X = c ;
+%%                %  X = b.
+%% ?- tedge(X,Y). %= X = a, Y = d.
+
+%% ----------------
+%% Build-in predicates
+%% ----------------
+
+?- 9 >  4. %= true
+?- 9 >= 4. %= true
+?- 4 <  9. %= true
+?- 4 =< 9. %= true
+?- 4 == 4. %= true
+
+%% ----------------
+%% Program[2]
+%% ----------------
+%% Rock-paper-scissors
+%%
+
+wins(paper,rock).
+wins(rock,scissors).
+wins(scissors,paper).
 
 %% ----------------
 %% Program[2]
