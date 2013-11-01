@@ -39,33 +39,46 @@
 
 * Prolog
 
-  Prolog is referred to as a *declarative language*. A Prolog program consists of
-  *facts* and *rules* which serve to define *relations*. Execution engine is
-  based on *unification* and *resolution*, a mechanism for recursively
-  extracting sets of data values implicit in the facts and rules of a program.
+  Prolog is referred to as a *declarative language*. A Prolog program consists
+  of *facts* and *rules* which serve to define *relations* aka *predicates*.
+  Execution engine is a mechanism for recursively extracting sets of data values
+  implicit in the facts and rules of a program. It is based on *unification* and
+  *resolution*.
 
-** Fact
+** Facts and Rules
 
-   *Fact* is statement, consisting of an *identifier* and *tuple of constants*.
-   It describes *relation* - *identifier* is its name, and values tuple are it
-   this relation. *Identifier* is also referred as *predicate* and tuple
-   *satisfies* it *UNCONDITIONALLY*.
+   Both of these statements are used for describing *predicates* and can be
+   combined in predicate definition.
+
+   *Fact* is statement, consisting of an *identifier*(predicate name) and *tuple
+   of constants*, and sets that tuple *satisfies* unconditionally the predicate.
 
      parent(lisp, clojure). % Note the lower case used for constants.
-     parent(java, c).
 
-** Rule
+   *Rule* is statement which gives ~conditions under which a tuple of constants
+   satisfy the predicate~. In a sense a ~fact is just a special case of rule~,
+   where condition is always satisfied by some chosen tuple of constants.
 
-   *Rule* is statement which gives ~conditions under which tuples satisfy a
-   predicate~. In a sense a fact is just a special case of rule, where condition
-   is always satisfied.
+   *Atom* is a *predicate* followed by a tuple of *terms*, where both
+   *constants* and *variables* are terms. Every *fact* is an *atom* and *rule*
+   *consists from a group of atoms. If a tuple satisfies the predicate of the
+   *atom, we say that atom is true.
+
+     *head* :- *body*           % Building blocks of a rule.
+     *Atom* :- *Atom1*, *Atom2* % If Atom[1..n] is true then Atom is also true.
 
      tedge(Node1,Node2) :-
       edge(Node1,SomeNode),
       edge(SomeNode,Node2).
 
+   *Recursive rules*
+
 ** Queries
 
-   We can request predicates
-   ?- parent(c, lisp).
-   ?- parent(c, X).
+   We can send queries to predicates to extract some implicit information,
+   defined by facts and rules.
+
+     ?- parent(c, lisp). % Check if constants satisfy the predicate.
+     ?- parent(c, X).    % Request possible values for variables.
+     ?- parent(X, c).    %
+     ?- parent(X, Y).    &

@@ -71,6 +71,27 @@ tedge(Node1,Node2) :-
 %%                %  X = b.
 %% ?- tedge(X,Y). %= X = a, Y = d.
 
+%% If a predicate is defined only by a group of facts, this doesn't mean it can
+%% be the head of a non-fact rule. For example we can make our graph a lot more
+%% complex by adding following rule.
+%%
+%%  edge(X,Y) :- tedge(X,Y).
+%%
+%% But this will cause infinite recursion for some queries. TODO: Why?
+%%
+
+%% This is a recursive rule to define path in graph. First thing to note is when
+%% using two rules with the same head to define a predicate, they are in logical
+%% OR relation.
+%%
+path(Node1, Node1).             % We add a fact to predicate definition to allow
+                                % paths of length 0.
+path(Node1, Node2) :-
+    edge(Node1, Node2).
+path(Node1, Node2) :-
+    edge(Node1, SomeNode),
+    path(SomeNode, Node2).
+
 %% ----------------
 %% Build-in predicates
 %% ----------------
@@ -84,15 +105,21 @@ tedge(Node1,Node2) :-
 %% ----------------
 %% Program[2]
 %% ----------------
+
 %% Rock-paper-scissors
 %%
-
 wins(paper,rock).
 wins(rock,scissors).
 wins(scissors,paper).
+%%
+%% ?- wins(X,Y).
 
 %% ----------------
-%% Program[2]
+%% Program[3]
+%% ----------------
+
+%% ----------------
+%% Program[4]
 %% ----------------
 
 %% likes(sam,Food) :-
