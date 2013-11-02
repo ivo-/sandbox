@@ -1,4 +1,9 @@
 
+* To explore
+
+  * https://www.refheap.com/20384
+  * lazy qsort
+
 * Do now [1/3]
 
 - [X] Fix namespaces.
