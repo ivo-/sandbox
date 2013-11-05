@@ -88,10 +88,70 @@ struct sockaddr_storage {
 };
 
 /* -------------------------------------------------------------------------- */
-/* socket.c                                                                   */
+/* IP addresses                                                               */
 /* -------------------------------------------------------------------------- */
 
-getaddrinfo();
+/* Converts IP address in numbers-and-dots notation into in_addr or id6_addr.
+   It returns -1 for error, 0 if address is messed up, 1 for success. */
+struct sockaddr_in sa;                                          // IPv4
+struct sockaddr_in6 sa6;                                        // IPv6
+inet_pton(AF_INET, "192.0.2.1", &(sa.sin_addr));                // IPv4
+inet_pton(AF_INET6, "2001:db8:63b3:1::3490", &(sa6.sin6_addr)); // IPv6
+
+char ip4[INET_ADDRSTRLEN];      // space to hold the IPv4 string
+struct sockaddr_in sa;          // pretend this is loaded with something
+inet_ntop(AF_INET, &(sa.sin_addr), ip4, INET_ADDRSTRLEN);
+
+char ip6[INET6_ADDRSTRLEN];     // space to hold the IPv6 string
+struct sockaddr_in6 sa6;        // pretend this is loaded with something
+inet_ntop(AF_INET6, &(sa6.sin6_addr), ip6, INET6_ADDRSTRLEN);
+
+
+/* -------------------------------------------------------------------------- */
+/* Info
+/* -------------------------------------------------------------------------- */
+
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netdb.h>
+
+/* Fills up the basic structs that will be needed trough all the program. */
+int getaddrinfo(const char *node, // Host name or IP address.
+                // Port name or a service name. SEE: /etc/services
+                  const char *service,
+                //
+                  const struct addrinfo *hints,
+                  struct addrinfo **res);
+
+/* EXAMPLE: */
+
+int status;
+struct addrinfo hints;
+struct addrinfo *servinfo;
+memset(&hints, 0, sizeof hints); // Make sure the struct is empty.
+
+hints.ai_family   = AF_UNSPEC;   // Don't care IPv4 or IPv6.
+hints.ai_socktype = SOCK_STREAM; // TCP stream sockets.
+hints.ai_flags    = AI_PASSIVE;  // Set *node to my IP, NULL in call.
+
+if ((status = getaddrinfo(NULL, "3490", &hints, &servinfo)) != 0) {
+  fprintf(stderr, "getaddrinfo error: %s\n", gai_strerror(status));
+  exit(1);
+}
+
+// servinfo now points to a linked list of 1 or more struct addrinfos
+// ... do everything until you don't need servinfo anymore ....
+
+freeaddrinfo(servinfo); // free the linked-list
+
+/* EXAMPLE(2):  */
+/* hints.ai_family   = AF_UNSPEC; */
+/* hints.ai_socktype = SOCK_STREAM; */
+/* status = getaddrinfo("www.example.net", "3490", &hints, &servinfo); */
+
+/* -------------------------------------------------------------------------- */
+/* Sockets
+/* -------------------------------------------------------------------------- */
 
 SOCK_STREAM;
 SOCK_DGRAM;
