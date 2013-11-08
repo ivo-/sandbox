@@ -94,7 +94,7 @@ perm([],[]).
 %% sort(L,Z) :- perm(L,Z), sorted(Z).
 
 %% subset(L,Z) - Z is subset of L
-subset(L,Z) :- perm(L,Z), sublist(L,Z).
+subset(L,Z) :- perm(L,P), sublist(P,Z).
 
 %% subseq(L,Z) - Z is subsequence of L
 subseq([],[]).
