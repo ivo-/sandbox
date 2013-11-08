@@ -91,16 +91,61 @@ perm([X|L],Z) :- perm(L,Q), in(Q,X,Z).
 perm([],[]).
 
 %% sort(L,Z) - Z is sorted L
-sort(L,Z) :- perm(L,Z), sorted(Z).
+%% sort(L,Z) :- perm(L,Z), sorted(Z).
 
 %% subset(L,Z) - Z is subset of L
 subset(L,Z) :- perm(L,Z), sublist(L,Z).
 
 %% subseq(L,Z) - Z is subsequence of L
 subseq([],[]).
-subseq([X|L],Z) :- :- subseq(L,Z).
+subseq([_|L],Z) :- subseq(L,Z).
 subseq([X|L],[X|Z]) :- subseq(L,Z).
 
 %% -----------------
-%% Sorts
+%% Simple sort
+%% -----------------
+
+%% min(L,X) - X is the smallest element of L
+min(L,X) :- member(L,X), not((member(L,Y), Y < X)).
+
+%% Min with linear complexity.
+%%
+%% min([X],X).
+%% min([A,B|L],X) :- A =< B, min([A|L],X).
+%% min([A,B|L],X) :- A > B, min([B|L],X).
+
+%% out(L,X,Z) - Z is L without X
+out(L,X,Z) :- append(L1,[X|L2],L), append(L1,L2,Z).
+
+%% isort(L,Z) - Z is the sorted X
+isort(L,[X|Z]) :- min(L,X), out(L,X,M), isort(M,Z).
+isort([],[]).
+
+%% -----------------
+%% Quick sort
+%% -----------------
+
+%% div(). based on realized predicates. It is like direct port from mathematical
+%% definition and is quite inefficient.
+comb(P,Q,L) :- append(P,Q,R), perm(L,R).
+div(L,Pivot,Left,Right) :- subseq(L,Left),
+                           subseq(L,Right),
+                           comb(Left,Right,L),
+                           not((member(Left,X), X > Pivot)),
+                           not((member(Right,X), X =< Pivot)).
+
+%% div([],_,[],[]).
+%% div([X|L],Pivot,[X|Left],Right) :- X =< Pivot, div(L,Pivot,Left,Right).
+%% div([X|L],Pivot,Left,[X|Right]) :- X > Pivot, div(L,Pivot,Left,Right).
+
+quick([],[]).
+quick([A],[A]).
+quick([Pivot|L],S) :- out(L, Pivot, E),
+                      div(E,X,Left,Right),
+                      quick(Left, SLeft),
+                      quick(Right, SRight),
+                      append(SLeft, [X|SRight], S).
+
+%% -----------------
+%% Merge
 %% -----------------
