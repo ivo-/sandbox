@@ -115,11 +115,11 @@
 
 ** Unification and Resolution
 
-   *Unification* is the process of taking two atoms(on from the query and one
+   *Unification* is the process of taking two atoms(one from the query and one
    from the fact or head of the rule) and determining if there is a
    substitution which makes them the same.
 
-     edge(a,X) -> edge(Y,Z) (Y = a, Z = b) => possible unification
+     edge(a,X) -> edge(a,b) (a = a, X = b) => possible unification
 
    *Resolution* happens when an atom of the query has been unified with the head
     of the rule(fact). It replaces the atom with the body of the rule(or
@@ -127,7 +127,7 @@
     new query.
 
     tedge(a,X) -> tedge(Node1,Node2) % unification (Node1 = a, X = Node2)
-    tedge(a,X) -> edge(a,SomeNode),edge(SomeNode,X) % substitution
+    tedge(a,X) -> edge(a,SomeNode), edge(SomeNode,X) % substitution
 
       edge(a,SomeNode) -> edge(a,b) % unification(SomeNode = b)
       edge(a,SomeNode) -> nothing   % substitution
@@ -141,8 +141,8 @@
     unification to match up arguments (pass parameters?) and the resolution to
     reform the query.
 
-    *Backtracking* is process after query is finally reduced to empty query.
-     Prolog backtracks to the most recent unification to determine whether there
-     is another fact or rule with which unification can succeed. If there is, an
-     additional solution may be found. Backtracking continues until all possible
-     answers are determined.
+    *Backtracking* is process after the query is finally reduced to an empty
+     query. Prolog backtracks to the most recent unification to determine
+     whether there is another fact or rule with which unification can succeed.
+     If there is, an additional solution may be found. Backtracking continues
+     until all possible answers are determined.

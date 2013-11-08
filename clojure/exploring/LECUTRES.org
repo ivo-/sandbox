@@ -116,5 +116,7 @@
 # Show finite state machine example using atoms, but simplified.
 # Scheme in clojure macro example.
 
+# Learning Clojure: next show various libs.
+
 # About advantages from laziness. Give concatenate example and how we can choose
 # to do elegant solutions because of laziness.
