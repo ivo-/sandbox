@@ -1,7 +1,7 @@
 (ns exploring.core.logic
   "Resources:
-    - https://github.com/swannodette/logic-tutorial
-    - https://github.com/clojure/core.logic/wiki
+    - TODO: https://github.com/frenchy64/Logic-Starter/wiki
+    - TODO: https://github.com/clojure/core.logic/wiki
   "
   (:refer-clojure :exclude [==])
   (:use [clojure.core.logic :exclude [appendo]]))
