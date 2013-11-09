@@ -14,14 +14,23 @@
 %% [a|[b|[c|[d]]]]
 %%
 
+%% ----------------
+%% Unification
+%% ----------------
+
 %% Check if there is possible unification between two lists.
 %% ?- [[x,1],3,4|[7,9]] = [A,B|[4,C|Q]].
+
+%% [X|Y] unifies with [a,b,c] with the unifier {X = a, Y = [b,c]}.
+%% [X|Y] unifies with [a,b,c,d] with the unifier {X = a, Y = [b,c,d]}.
+%% [X|Y] unifies with [a] with the unifier {X = a, Y = []}.
+%% [X|Y] does not unify with [].
 
 %% -----------------
 %% Append and member
 %% -----------------
 
-member(list,element).
+%% member(list,element).
 member([X|_],X).
 member([_|Q],X) :- member(Q,X).
 
@@ -53,6 +62,20 @@ member([_|Q],X) :- member(Q,X).
 %% append(list,list,list).
 append([],M,M).
 append([X|Q],M,[X|T]) :- append(Q,M,T).
+
+%%
+%%      Call stack for matching variable value
+%%      --------------------------------------
+%%
+%% append([1,3],[3,2,4,5],Y).
+%%    Call: (6) append([1, 3], [3, 2, 4, 5], _G174) ?
+%%    Call: (7) append([3], [3, 2, 4, 5], _G262) ?
+%%    Call: (8) append([], [3, 2, 4, 5], _G265) ?
+%%    Exit: (8) append([], [3, 2, 4, 5], [3, 2, 4, 5]) ?
+%%    Exit: (7) append([3], [3, 2, 4, 5], [3, 3, 2, 4, 5]) ?
+%%    Exit: (6) append([1, 3], [3, 2, 4, 5], [1, 3, 3, 2, 4, 5]) ?
+%% Y = [1, 3, 3, 2, 4, 5].
+%%
 
 %% member(L,X) :- append(_,[X|_],L).      % member with append.
 conseq(L,X,Y) :- append(_,[X,Y|_],L).     % X and Y are consequent.

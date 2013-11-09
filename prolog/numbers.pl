@@ -28,6 +28,29 @@
 %%                              X1 = 1       ..............
 %%                              X  = 2       ..............
 %%
+%%
+%% int(X).
+%%    Call: (6) int(_G195) ?
+%%    Exit: (6) int(0) ?
+%% X = 0 ;
+%%    Redo: (6) int(_G195) ?
+%%    Call: (7) int(_G269) ?
+%%    Exit: (7) int(0) ?
+%%    Call: (7) _G195 is 0+1 ?
+%%    Exit: (7) 1 is 0+1 ?
+%%    Exit: (6) int(1) ?
+%% X = 1 ;
+%%    Redo: (7) int(_G269) ?
+%%    Call: (8) int(_G269) ?
+%%    Exit: (8) int(0) ?
+%%    Call: (8) _G272 is 0+1 ?
+%%    Exit: (8) 1 is 0+1 ?
+%%    Exit: (7) int(1) ?
+%%    Call: (7) _G195 is 1+1 ?
+%%    Exit: (7) 2 is 1+1 ?
+%%    Exit: (6) int(2) ?
+%% X = 2 .
+%%
 int(0).
 int(X) :- int(Y), X is Y + 1.
 

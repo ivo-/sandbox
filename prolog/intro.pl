@@ -18,6 +18,11 @@
 %% Load file named 'first.pl':
 %%    [’first’].
 %%
+%% Trace the execution of predicates:
+%%    trace.
+%%      <return>      next
+%%      e             exti
+%%
 %% ----------------
 %% Queries
 %% ----------------
