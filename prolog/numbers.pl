@@ -47,6 +47,28 @@ fibN(N,X) :- N > 1,
 %% Fibbonaci with exponential complexity.
 fibe(X) :- int(N), fibN(N,X).
 
-%% Fibbonaci with linear complexity.
+%% Fibbonaci with better complexity.
 fib(0,1).
 fib(X,Y) :- fib(Z,X), Y is Z + X.
+
+%% ----------------
+%% Intermediate
+%% ----------------
+
+between(X,Y,X) :- X =< Y.
+between(X,Y,C) :- X < Y, X1 is X+1, between(X1,Y,C).
+
+%% ----------------
+%% Advanced
+%% ----------------
+
+%% Generate pair of natural numbers.
+%%
+%% Here is one wrong solution. In this case second generator will iterate
+%% endlessly and first will stay at 0.
+%%
+%%   pair(X,Y) :- int(X),int(Y).
+%%
+%% Here is the correct solution. It uses only one generator to produce the sum
+%% ot the pair and then transforms this sum into X and Y.
+pair(X,Y) :- int(S),between(0,S,X),Y is S-X.
