@@ -99,15 +99,32 @@ path(Node1, Node2) :-
 %% Build-in predicates
 %% ----------------
 
+%% Unification:
+%% ?- [X|[2,3]] = [1,2,3].
+
 ?- 9 >  4. %= true
 ?- 9 >= 4. %= true
 ?- 4 <  9. %= true
 ?- 4 =< 9. %= true
 ?- 4 == 4. %= true
 
+%% Arithmetic:
+?- X is 3.       % Set or check X's value.
+?- 3*2 =:= 3+3.  % Evaluate and compare results.
+
+?- X is 3  +  2. %= 5
+?- X is 3  -  2. %= 1
+?- X is 3  *  2. %= 6
+?- X is 3  /  2. %= 1.5
+?- X is 3 **  2. %= 9
+?- X is 3 //  2. %= 1
+?- X is 3 mod 2. %= 1
+
+%% Debug:
 %% ?- writeln(K)
 %% ?- writeln('|')
 
+%% All values should be generated outside of not!
 ?- not((1 < 3, 5 > 2)).
 
 %% ----------------
