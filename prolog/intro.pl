@@ -102,15 +102,15 @@ path(Node1, Node2) :-
 %% Unification:
 %% ?- [X|[2,3]] = [1,2,3].
 
+%% Arithmetic:
+?- X is 3.       % Set or check X's value.
+?- 3*2 =:= 3+3.  % Evaluate and compare results.
+
 ?- 9 >  4. %= true
 ?- 9 >= 4. %= true
 ?- 4 <  9. %= true
 ?- 4 =< 9. %= true
 ?- 4 == 4. %= true
-
-%% Arithmetic:
-?- X is 3.       % Set or check X's value.
-?- 3*2 =:= 3+3.  % Evaluate and compare results.
 
 ?- X is 3  +  2. %= 5
 ?- X is 3  -  2. %= 1
