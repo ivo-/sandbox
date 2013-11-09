@@ -51,6 +51,35 @@
 %%    Exit: (6) int(2) ?
 %% X = 2 .
 %%
+%%
+%% int(3).
+%%    Call: (6) int(3) ?
+%%    Call: (7) int(_G666) ?
+%%    Exit: (7) int(0) ?
+%%    Call: (7) 3 is 0+1 ?
+%%    Fail: (7) 3 is 0+1 ?
+%%    Redo: (7) int(_G666) ?
+%%    Call: (8) int(_G666) ?
+%%    Exit: (8) int(0) ?
+%%    Call: (8) _G669 is 0+1 ?
+%%    Exit: (8) 1 is 0+1 ?
+%%    Exit: (7) int(1) ?
+%%    Call: (7) 3 is 1+1 ?
+%%    Fail: (7) 3 is 1+1 ?
+%%    Redo: (8) int(_G666) ?
+%%    Call: (9) int(_G666) ?
+%%    Exit: (9) int(0) ?
+%%    Call: (9) _G669 is 0+1 ?
+%%    Exit: (9) 1 is 0+1 ?
+%%    Exit: (8) int(1) ?
+%%    Call: (8) _G672 is 1+1 ?
+%%    Exit: (8) 2 is 1+1 ?
+%%    Exit: (7) int(2) ?
+%%    Call: (7) 3 is 2+1 ?
+%%    Exit: (7) 3 is 2+1 ?
+%%    Exit: (6) int(3) ?
+%% true.
+%%
 int(0).
 int(X) :- int(Y), X is Y + 1.
 
