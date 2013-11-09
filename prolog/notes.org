@@ -93,7 +93,7 @@
 
      ?- parent(c, X), parent(X, c).
 
-** Computation
+** Queries
 
 *** Ground queries
 
@@ -113,7 +113,7 @@
     all found satisfiable results. Then we can choose Werther we want this
     process to continue or currently found values are enough.
 
-** Unification and Resolution
+** Computation phases
 
    *Unification* is the process of taking two atoms(one from the query and one
    from the fact or head of the rule) and determining if there is a
@@ -127,19 +127,21 @@
     new query.
 
     tedge(a,X) -> tedge(Node1,Node2) % unification (Node1 = a, X = Node2)
-    tedge(a,X) -> edge(a,SomeNode), edge(SomeNode,X) % substitution
+    tedge(a,X) -> edge(a,SomeNode), edge(SomeNode,Node2) % substitution
 
       edge(a,SomeNode) -> edge(a,b) % unification(SomeNode = b)
       edge(a,SomeNode) -> nothing   % substitution
 
-      edge(b,X) -> edge(b,d)        % unification(X = d)
-      edge(b,X) -> nothing          % substitution
+      edge(b,Node2) -> edge(b,d)        % unification(Node2 = d)
+      edge(b,Node2) -> nothing          % substitution
 
-    Resulting query is empty and we are done. The system found value for our
-    variable X. At this point the substitution can be determined. Notice that at
-    no point has there been anything like a traditional computation – just the
-    unification to match up arguments (pass parameters?) and the resolution to
-    reform the query.
+    Resulting query is empty and we are done. The system found value for all of
+    our variables. Now engine goes backward and generates values for all
+    variables back to the initial call and returns answer for searched once. At
+    this point the process can be determined. Notice that at no point has
+    there been anything like a traditional computation – just the unification to
+    match up arguments (pass parameters?) and the resolution to reform the
+    query.
 
     *Backtracking* is process after the query is finally reduced to an empty
      query. Prolog backtracks to the most recent unification to determine

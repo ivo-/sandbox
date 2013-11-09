@@ -76,11 +76,19 @@ append([X|Q],M,[X|T]) :- append(Q,M,T).
 %%    Exit: (6) append([1, 3], [3, 2, 4, 5], [1, 3, 3, 2, 4, 5]) ?
 %% Y = [1, 3, 3, 2, 4, 5].
 %%
+%% Note that in each call new variables are created rather than passing
+%% references from call to call. We can clearly see how recursion tree expands
+%% and contracts to generate values for variables in first query call using
+%% matched values from inner calls.
+%%
 
-%% member(L,X) :- append(_,[X|_],L).      % member with append.
+%% member(L,X) :- append(_,[X|_],L).      % Member with append.
 conseq(L,X,Y) :- append(_,[X,Y|_],L).     % X and Y are consequent.
 sorted(L) :- not((conseq(L,X,Y), X > Y)). % L is soreted list.
 last(L,X) :- append(_,[X],L).             % X is last element in L.
+
+reverse([X],[X]).
+reverse([X|L],Z) :- reverse(L,Q), append(Q,[X],Z).
 
 %% -----------------
 %% Sublists
