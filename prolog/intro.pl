@@ -134,6 +134,9 @@ path(Node1, Node2) :-
 %% All values should be generated outside of not!
 ?- not((1 < 3, 5 > 2)).
 
+%% Or:
+?- 1 < 3 ; 3 < 1.
+
 %% ----------------
 %% Program[2]
 %% ----------------

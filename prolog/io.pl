@@ -44,8 +44,12 @@ file(File,Contents) :-
     readAll(In,Contents),
     close(In).
 
-readValid(_,[],C)         :- eof_char(C).
-readValid(In,Chars,C)     :- not(legal(C)), get0(In,N), readValid(In,Chars,N).
-readValid(In,[C|Chars],C) :- legal(C), get0(In,N), readValid(In,Chars,N).
+processStream(_,[],C)         :- eof_char(C).
+processStream(In,Chars,C)     :- not(legal(C)), get0(In,N), processStream(In,Chars,N).
+processStream(In,[C|Chars],C) :- legal(C), get0(In,N), processStream(In,Chars,N).
+readAll(In,Contents) :- get0(In,C),processStream(In,Contents,C).
 
-readAll(In,Contents)    :- get0(In,C),readValid(In,Contents,C).
+%% readAll(In,Contents) :- get0(In,C),
+%%                         ((eof_char(C), Contents = [])                      ;
+%%                          (not(legal(C)), readAll(In,Contents))             ;
+%%                          (legal(C), Contents = [C|Rest], readAll(In,Rest))).
