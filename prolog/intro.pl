@@ -1,5 +1,5 @@
 %% ================
-%% Intro to Prolog.
+%% Intro to Prolog
 %% ================
 %%
 %% ----------------
@@ -22,6 +22,8 @@
 %%    trace.
 %%      <return>      next
 %%      e             exti
+%%
+%%    notrace.
 %%
 %% ----------------
 %% Queries

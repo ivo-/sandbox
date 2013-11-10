@@ -120,3 +120,5 @@
 
 # About advantages from laziness. Give concatenate example and how we can choose
 # to do elegant solutions because of laziness.
+
+# core.logic to parse presentations code.
