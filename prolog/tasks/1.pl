@@ -1,5 +1,5 @@
 %% A list of lists is normal if it is longer than any of his elements. A list of
-%% lists is eccentric if it is normal, but none of its elements isn't normal.
+%% lists is eccentric if it is normal, but none of its elements is normal.
 %%
 %% Define Prolog predicate q(L) that checks if list L has eccentric
 %% part(sublist).
