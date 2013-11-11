@@ -79,9 +79,9 @@
 ;;; sees and returns only symbols, keywords and data structures. Whether those
 ;;; symbols are when code produced by the macro is executed is not for the macro
 ;;; to decide. This makes debugging tricky but we have some good tools for that.
-(defn oops [arg] (frobnicate arg))       ;= #<CompilerException ..
-(defmacro oops [arg] `(frobnicate ~arg)) ;= #'user/oops
-(oops 123)                               ;= #<CompilerException ..
+#_(defn oops [arg] (frobnicate arg))       ;= #<CompilerException ..
+#_(defmacro oops [arg] `(frobnicate ~arg)) ;= #'user/oops
+#_(oops 123)                               ;= #<CompilerException ..
 
 ;;; Macroexpand family functions are the key tools used in testing and debugging
 ;;; macros. They takes a data structure(in debugging context, often quoted macro
@@ -96,3 +96,30 @@
 ;;;
 ;;; Macroexpands until top level form is not macro anymore.
 (macroexpand '(doseq [x (range 10)] (prn 1))) ;= ...
+;;; Neither macroexpand or macroexpand-1 expand nested forms. macroexpand-all is
+;;; hack for this that works in most of the cases, but it only just tries to
+;;; emulate job done by the compiler. It shouldn't expand quoted forms for
+;;; example.
+(clojure.walk/macroexpand-all '(cond a b c d))
+
+;;; Wen using macros we often want to return list to represent future calls to
+;;; other macros, functions or special forms, therefore we need tools to build
+;;; these lists.
+(defmacro puts [& args]
+  (list* 'println args))
+
+(defmacro while
+  [test & body]
+  (list 'loop [] (concat
+                  (list 'when test)
+                  body
+                  '((recur)))))
+
+(defmacro while
+  [test & body]
+  `(loop []                             ; syntax-quote     -
+     (when ~test                        ; unquote          -
+       ~@body                           ; splicing-unquote -
+       (recur))))
+
+(macroexpand '(while true (print 1 2 3)))

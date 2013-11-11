@@ -122,3 +122,10 @@
 # to do elegant solutions because of laziness.
 
 # core.logic to parse presentations code.
+
+# Clojure differences from Scala, Java, Groovy, ...
+# Clojure is really simple and small
+
+# Show some interesting macros from clojure.core and discus how macros are
+# useful for extending language and how they make possible small core and much
+# of the syntax to be generated using them.
