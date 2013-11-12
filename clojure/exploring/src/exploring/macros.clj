@@ -117,9 +117,20 @@
 
 (defmacro while
   [test & body]
-  `(loop []                             ; syntax-quote     -
-     (when ~test                        ; unquote          -
-       ~@body                           ; splicing-unquote -
+  `(loop []                             ; syntax-quote
+     (when ~test                        ; unquote
+       ~@body                           ; splicing-unquote
        (recur))))
 
 (macroexpand '(while true (print 1 2 3)))
+
+;;; Syntax quote fully qualifies unqualified symbols with the current namespace.
+;;; This is very important behavior when used in macros, ensuring that macro
+;;; will not have context based behavior. It also allows unquoting.
+`(print 1 2 clojure.core/map) ;= (clojure.core/print 1 2 clojure.core/map)
+(let [a 10
+      b [1 2 3 4]]
+  `(print
+    ~a  ;;= unquoting
+    ~@b ;;= unquote-splicing
+    )) ;= (clojure.core/print 10 1 2 3 4)

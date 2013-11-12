@@ -129,3 +129,8 @@
 # Show some interesting macros from clojure.core and discus how macros are
 # useful for extending language and how they make possible small core and much
 # of the syntax to be generated using them.
+
+# Lecture:
+# - show contents
+# - show interface that we will use
+# - discuss best practices, advantages, give examples
