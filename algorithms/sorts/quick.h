@@ -2,10 +2,6 @@
  * Quick sort
  * ------
  *
- * ASYMPTOTIC TIME:
- *
- *  T(n) = n
- *
  */
 
 #include <stdlib.h>
