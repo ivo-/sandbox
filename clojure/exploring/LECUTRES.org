@@ -126,6 +126,8 @@
 # Clojure differences from Scala, Java, Groovy, ...
 # Clojure is really simple and small
 
+# First class functions as a first rule when you need an abstraction.
+
 # Show some interesting macros from clojure.core and discus how macros are
 # useful for extending language and how they make possible small core and much
 # of the syntax to be generated using them.

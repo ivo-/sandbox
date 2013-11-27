@@ -134,3 +134,161 @@
     ~a  ;;= unquoting
     ~@b ;;= unquote-splicing
     )) ;= (clojure.core/print 10 1 2 3 4)
+
+;;; Macros operate at compile time and are not a first class citizens of a
+;;; running program. Macro has no access of a runtime information. So we cannot
+;;; use them as first class functions that can be called at runtime. Once
+;;; compiled, code can no longer access or use macros.
+(defn fn-hello [x] (str "Hello, " x "!"))
+(defmacro macro-hello [x] `(str "Hello, " ~x "!"))
+fn-hello                ;= #<macros$fn_hello exploring.macros$fn_hello@6ba22acb>
+macro-hello             ;= Can't take value of a macro: #'exploring...
+
+;;; It's a fix but where all that macro power go?
+(def fix-macro-hello #(macro-hello %))
+
+;;; Macro is convenient and should be used on compilation, not in runtime where
+;;; it can make your life difficult. Realize core functionality in functions and
+;;; use macros for syntax sugar that uses this functions.
+
+;;; Macros should be used only when you need your own language constructions aka
+;;; when you need them and functions can't do the job. Always prefer function
+;;; based solutions when you are not sure. Nothing complex should be inside
+;;; macro. Clojure prevents us from using macros as functions to eliminate a
+;;; large class of errors.
+
+(defmacro unhygienic
+  "Error when trying to le qualified name."
+  [& body]
+  `(let [x 10]
+     ~@body))
+
+(defmacro unhygienic
+  "No errors by producing buggy code."
+  [& body]
+  `(let [~'x 10]
+     ~@body))
+
+(gensym)          ;= G__2894
+(gensym "prefix") ;= prefix2900
+
+(defmacro hygienic
+  "No errors by producing buggy code."
+  [& body]
+  (let [sym (gensym)]
+    `(let [~sym 10]
+       (prn ~sym)
+       ~@body)))
+
+(defmacro auto-gensym
+  "Auto gensym reader macro. It is valid only in single syntax quote. If we need
+  to use gensym in multiple syntax-quote forms we should let it manually."
+  [& body]
+  `(let [x# 10
+         y# 20]
+     (+ (+ x# y#) ~@body)))
+
+;;; Macro that deliberately lacks a name is called anaphoric(like this). This
+;;; should be avoided. A much better solution is to explicitly require a user to
+;;; set names for his bindings(like for macro).
+
+
+;;; Double evaluation is when an argument of a macro appears twice or more in
+;;; its expansion. It is code smell even worked around. You probably should
+;;; extract some code into external function when this arises.
+(defmacro spy [x]
+  `(do (println "spied" '~x ~x) ~x))
+(defmacro safe-spy [x]
+  `(let [sym# ~x]
+     (do (println "spied" '~x sym#) sym#)))
+
+
+;;; Patterns:
+;;;
+;;;     1. Require that new local bindings are specified in vector.
+;;;     2. Macros that define a vars:
+;;;         - Start with 'def.
+;;;         - Accepts name of the var as first argument.
+;;;         - Define one var per macro form.
+;;;     3. No complex behavior should be locked inside macros.
+
+(defmacro implicit-local-bindings []
+  ;; Contains map with keys->names-of-current-locals and values->unspecified.
+  ;; Values shouldn't be relied upon.
+  &env
+  (keys &env)
+
+  ;; List of the whole form that is currently macroexpanded. It's basically the
+  ;; same form read by the reader. It has all the metadata defined by the user
+  ;; (such as type hints).
+  &form
+  )
+
+(defmacro simplify
+  "Example how &env can be used to optimize code at compile time."
+  [expr]
+  (let [locals (set (keys &env))]
+    (if (some locals (flatten expr))
+      expr
+      (do
+        (println "Precomputing: " expr)
+        (list `quote (eval expr))))))
+
+;;; Getting macro implementation function is generally useful when debugging. We
+;;; cannot use macroexpand when debugging &env, because there is no way to set
+;;; value for it.
+;;; (macro &form &env & args)
+(#'simplify nil &env)
+(@#'simplify nil &env)
+
+(defmacro throw-correct-errors
+  "Shows example how correct errors can be thrown at compile time. If we just
+  throw an exception it will show only line in macro not line in code where
+  macro is called."
+  [& triples]
+  (every? #(or (== 3 (count %))
+               (throw (IllegalArgumentException.
+                       (format "`%s` provided to `%s` on line %s has < 3 elements"
+                               %
+                               (first &form) ;; ... in case macro is renamed
+                               ;; when imported from other ns
+                               (-> &form meta :line)))))
+          triples)
+  ;; ...
+  )
+
+;;; Most of the macros doesn't preserve meta data attached to them(like type
+;;; hints). But we can correct that. In most cases we can simply wrap our code
+;;; with (with-meta) function, but in this example we cannot due to the fact
+;;; that special forms like (let) cannot have meta data.
+(defmacro OR
+  ([] nil)
+  ([x]
+     (let [result (with-meta (gensym "res") (meta &form))]
+       `(let [~result ~x]
+          ~result))))
+
+(defn macroexpand1-env [env form]
+  (if-let [[x & xs] (and (seq? form) (seq form))]
+    (if-let [v (and (symbol? x) (resolve x))]
+      (if (-> v meta :macro)
+        (apply @v form env xs)
+        form)
+      form)
+    form))
+
+(defmacro if-all-let [bindings then else]
+  (reduce (fn [subform binding]
+            `(if-let [~@binding] ~subform ~else))
+          then (reverse (partition 2 bindings))))
+
+(defn insert-second
+  "Insert x as the second item in seq y."
+  [x ys]
+  (let [ys (ensure-seq ys)]
+    `(~(first ys) ~x ~@(rest ys))))
+
+;; Functional programming and data modeling already yield tremendous expressive
+;; power and allow us to abstract away most repeating patterns in our code.
+;; Macros are the final step, simplifying patterns of control flow and adding
+;; syntactic sugar to minimize or eliminate code awkwardness.
