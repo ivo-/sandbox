@@ -136,3 +136,31 @@
 # - show contents
 # - show interface that we will use
 # - discuss best practices, advantages, give examples
+
+# all the actions that get sent to any agent using send are run in a threadpool with a couple more threads than the physical number of processors. this causes them to run closer to the cpu's full capacity. if you make 1000 calls using send you don't really incur much switching overhead, the calls that cant be processed immediately just wait until a processor becomes available. If they block then the thread pool can run dry
+
+# NOTE: Not new just expandable thread pool.
+# when you use send-off a new thread is created for each call. if you send-off 1000 functions the ones that cant be processed immediately still wait for the next available processor and they may incur the extra overhead of starting a thread if the "send-off threadpool" happens to be running low . its ok if the threads block because each task (potentially) gets a dedicated thread.
+# MORE: http://tech.puredanger.com/2010/06/08/clojure-agent-thread-pools/
+
+# ClojureScript example stack lecture.
+# Web example stack lecture.
+
+# For example, the effect of a changed macro definition will not be seen until
+# code which uses the macro has been recompiled
+# Changes to methods of a defrecord or deftype will not have any effect on
+# existing instances of that type.
+# Show sierra's workflow.
+
+# Code is structured just in namespaces and vars.
+
+# Constructor for state instead of global state.
+# Pass state to operations.
+# Tools.analyzer for macroexpand.
+
+# TODO: On lazyness how collection is iterated once not for every operation.
+# Reducers after laziness.(@skanev)
+# Clojure compilation and compilers before talking to macros or at the same time?
+#
+# Thanks to macros haskell style pattern matching is a library, Prolog like
+# relational programming is a library.
