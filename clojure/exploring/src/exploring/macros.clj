@@ -1,3 +1,5 @@
+;;; Don't support runtime variable number of operations.
+
 <<<<<<< HEAD
 (ns exploring.macros "
   In short, when a language lacks proper means of abstraction, the result is

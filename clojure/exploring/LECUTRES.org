@@ -164,3 +164,10 @@
 #
 # Thanks to macros haskell style pattern matching is a library, Prolog like
 # relational programming is a library.
+
+# core.async is a good demonstration of the power of the macro facilities that a
+# Lisp has to offer: while most other language core.async does things that would
+# require changes to the language, in a Lisp it is possible to implement these
+# as a library using macros.
+
+# About EDN.
