@@ -6,20 +6,17 @@
         — Rich Hickey
 
    Core.async provides a convenient way to decouple program’s consumers and
-   producers by introducing explicit queues between them. This allows the
-   program components to communicate asynchronously(indirectly) and core.async
-   provides the methods needed to coordinate asynchronous channels.
+   producers by introducing explicit queues/channels between them and tools to
+   coordinate these channels. Sync or async I/O from channels is supported but
+   async the interesting one.
 
    It is implementation of CSP mostly inspired by GO, but it is implemented as
-   just a clojure lib based upon sexp manipulation and this is the big deal
-   about it. It is excellent showcase how powerful macros are.
-
-   It should be noted that Clojure's mechanisms for concurrent use of state
-   remain viable, and channels are oriented towards the flow aspects of a
-   system.
+   pure clojure lib based upon sexp manipulation and this is the big deal
+   about it. It is excellent showcase of how powerful macros are.
 
    In ClojureScript environment core.async can be used to simplify asynchronous
-   programming by substituting callbacks with channels.
+   programming by substituting callbacks hell with more simple and concise
+   abstraction - channels.
 
    Practices:
 
@@ -30,8 +27,11 @@
      care, because they are immutable. This makes the language even better fit
      this style of programming than GO.
 
-      - Possible deadlocks.
-   "
+      - It introduces the possibility of deadlock.
+
+   It should be noted that Clojure's mechanisms for concurrent use of state
+   remain viable, and channels are oriented towards the flow aspects of a
+   system, but they can be used to parallel work."
   (:require [clojure.core.async :refer :all]))
 
 ;;; Channels can be thought as blocking queues where values can be pushed or
@@ -40,22 +40,25 @@
 ;;; communitcation asynchronous. Unbounded buffering is discouraged and
 ;;; considered a bad practice. There are two ways to perform I/O from channels
 ;;; and they are often combined.
-;;;
+(chan)
+(chan 10)                   ;; blocks when full
+(chan (dropping-buffer 10)) ;; drops newest
+(chan (sliding-buffer 10))  ;; drops oldest
+
 ;;; When channel is closed it receives nil message. Explicit passing of nil into
 ;;; the channel is not supported.
-(chan)
-(chan 10)
-;; sliding-buffer 64
+(close! (chan))
 
 ;;; Blocking I/O from channels. These operations work in ordinary(native)
 ;;; threads and blocks them when waiting is required.
 (<!! chan)
 (>!! chan val)
+(alts!! [chan1 chan2])
 (thread
 ;;; Uses native thread and returns a channel. Should be used over future.
  )
 
-;;; Non-blocking I/O(inside of go block). Inversion-of-control(IOC) thread is
+;;; Non-blocking I/O(inside of a go block). Inversion-of-control(IOC) thread is
 ;;; created with each go block, it's body is examined for any channel operations
 ;;; and then transformed into state machine. When reaching a blocking operation
 ;;; state machine will be parked and the actual thread of control will be
@@ -64,11 +67,13 @@
 ;;;
 ;;; This approach helps us avoid wasting system resources by blocking threads
 ;;; for channel I/O. It reuses a couple of non blocking threads witch is proved
-;;; performance boost.
+;;; to be a performance boost. It is especially useful when working with async
+;;; APIs. Adn since go blocks are lightweight processes not bound to threads, we
+;;; can have LOTS of them!
 ;;;
-;;; Go block returns immediately. Its body is run in the same CPU-bound thread
-;;; pool used also in futures and agents. This means that blocking I/O in go
-;;; blocks is not a good idea.
+;;; Go block returns immediately. Its body is executed in the same CPU-bound
+;;; thread pool used also in futures and agents. This means that blocking I/O in
+;;; go blocks is not a good idea.
 ;;;
 (let [ch (chan)]
   (go
@@ -78,6 +83,7 @@
    ))
 
 (<!! (go 10))                   ; Blocks calling thread until go block finishes.
+(<!! (go))                      ;= nil Block is garbage-collected and closed.
 
 ;;; Returns a channel that will close itself in {time} ms. It is used instead
 ;;; of Thread/sleep in (go) blocks.
@@ -86,8 +92,8 @@
  (<! (timeout 1000)))
 
 ;;; Ability to pull from many channels and executes code for the first available
-;;; value. It is common to use in combination with (timeout N) to set reading
-;;; timeout from channel.
+;;; value. This is the killer future of channels over queues. It is common to
+;;; use in combination with (timeout N) to set reading timeout from channel.
 (go (alts! [ch1 ch2 ch3]))              ;= [val provider]
 
 ;;; Common macro for introducing local event loops. It basically expnads
@@ -189,3 +195,70 @@
      (if (= source ch)
        (prn "Value")
        (prn "Timeout")))))
+
+;;; ============================================================================
+;;; EXAMPLE 4
+;;; ============================================================================
+
+(let [ch (chan 40)]
+  ;; Producer
+  (go-loop [i 60]
+           (when-not (zero? i)
+             (>! ch (rand-int 10))
+             (<! (timeout (rand-int 50)))
+             (recur (dec i))))
+
+  ;; Parallel consumers
+  (go-loop [v (<! ch)]
+           (when v (<! (timeout (rand-int 50))) (prn "1 -> " v) (recur (<! ch))))
+  (go-loop [v (<! ch)]
+           (when v (<! (timeout (rand-int 50))) (prn "2 -> " v) (recur (<! ch))))
+  (go-loop [v (<! ch)]
+           (when v (<! (timeout (rand-int 50))) (prn "3 -> " v) (recur (<! ch))))
+  (go-loop [v (<! ch)]
+           (when v (<! (timeout (rand-int 50))) (prn "4 -> " v) (recur (<! ch)))))
+
+;;; ============================================================================
+;;; EXAMPLE 5
+;;; ============================================================================
+
+(defn pmax
+  "Process messages from input in parallel with at most max concurrent
+   operations, but creating the minimum amount threads to keep up with the
+   input speed.
+
+   Invokes f on values taken from input channel. f must return a
+   channel, whose first value (if not closed) will be put on the output
+   channel.
+
+   Returns a channel which will be closed when the input channel is
+   closed and all operations have completed.
+
+   Creates new operations lazily: if processing can keep up with input,
+   the number of parallel operations may be less than max.
+
+   Note: the order of outputs may not match the order of inputs.
+   Source: http://stuartsierra.com/2013/12/08/parallel-processing-with-core-async"
+  [max f input output]
+  (go-loop [tasks #{input}] ;; Start only with input task.
+    (when (seq tasks)
+      ;; Read value from a task channel ready to provide it. If there are
+      ;; multiple values ready, non-deterministic choice will be made as by
+      ;; alts! semantics.
+      (let [[value task] (alts! (vec tasks))]
+        (if (= task input)
+          (if (nil? value)
+            ;; When input is closed.
+            (recur (disj tasks task))
+
+            ;; When max - 1 tasks running temporarily stop reading input.
+            (recur (conj (if (= max (count tasks))
+                           (disj tasks input)
+                           tasks)
+                         ;; Add new processing task.
+                         (f value))))
+
+          ;; One processing task finished: continue reading input.
+          (do (when-not (nil? value) (>! output value))
+              ;; Add input after each processing task.
+              (recur (-> tasks (disj task) (conj input)))))))))
