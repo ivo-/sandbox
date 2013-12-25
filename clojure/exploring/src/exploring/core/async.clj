@@ -1,5 +1,6 @@
 ;;; http://clojure.com/blog/2013/06/28/clojure-core-async-channels.html
-
+;;; http://hueypetersen.com/posts/2013/07/10/code-read-of-core-async-timeouts
+;;; http://hueypetersen.com/posts/2013/08/02/the-state-machines-of-core-async/
 (ns exploring.core.async
   "| There comes a time in all good programs when components or subsystems
    | must stop communicating directly with one another.

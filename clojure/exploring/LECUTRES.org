@@ -171,3 +171,10 @@
 # as a library using macros.
 
 # About EDN.
+
+# Core.async and Rich intended it for control flow(quote) but it can be very
+# pleasant way to do parallel work. Even in JS to avoid blocking the main
+# thread.
+
+# Learn from Rich Hickey texts(clojure.org) and mention rationale before each
+# lecture. Structure them that way.
