@@ -178,3 +178,16 @@
 
 # Learn from Rich Hickey texts(clojure.org) and mention rationale before each
 # lecture. Structure them that way.
+
+# Protocols and example how we can remove big if-s like these we do in Scheme
+# for example.
+
+# More than anything with Clojure I’ve come to appreciate the data-centric
+# approach to building software. This is deserving of a much longer and more
+# exploratory post someday but I can now see how Java locks your data away in
+# boxes and makes you use keys (and write key factories and key adapters and key
+# factory bridge adapters) to get it back out again. Like I said, need to write
+# this up in more detail.
+#
+# Clojure just passes that data around without all these unnecessary
+# abstractions. It is based on data transformations.

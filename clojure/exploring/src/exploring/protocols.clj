@@ -184,3 +184,12 @@
     java.awt.event.ActionListener
     (actionPerformed [this e]
       (f e))))
+
+(extenders ProtocolName)     ;; all classes that have been extended the protocol
+(extends? ProtocolName Type) ;; type extends a protocol?
+(satisfies? ProtocolName instance) ;; instance type extends a protocol?
+
+;;; Dispatch:
+;;;   - Last implementation wins.
+;;;   - Most specific type wins. If no such arbitrary implementation is used.
+;;;   -
