@@ -191,3 +191,24 @@
 #
 # Clojure just passes that data around without all these unnecessary
 # abstractions. It is based on data transformations.
+
+# Core.async still makes better code, we will have to use global state to sync
+# async operations in JS but with channels we can avoid this. Make example and
+# mention FRP.
+
+# What makes scheme unpractical? How Clojure solves this?
+# Lisp is so powerful that problems which are technical issues in other
+# programming languages are social issues in Lisp.
+
+# Reader checks for duplicates.
+# (hash-map (atom nil) {}
+# (atom nil) {})
+# {(new-state) {}
+# (new-state) {}}
+
+# pr-str, read-string notes
+# Core.async ngnix example with workers and do this with treads and blocking
+# queues.
+
+# In clojure data is on the pedestal. It has powerful standard lib to work with
+# them. Event the code is data.
