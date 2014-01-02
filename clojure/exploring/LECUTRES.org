@@ -3,7 +3,6 @@
 # managing global state... isn't it all we fight against :) Lecture for good
 # functional design. Small pure functions and state layer.
 #
-# Anketa: kursove, regexp, concurency, so on
 #
 # Make lectures plan for 2013
 #
@@ -209,6 +208,8 @@
 # pr-str, read-string notes
 # Core.async ngnix example with workers and do this with treads and blocking
 # queues.
-
+#
+# Анкета: kursove, regexp, concurency, so on
+#
 # In clojure data is on the pedestal. It has powerful standard lib to work with
 # them. Event the code is data.
