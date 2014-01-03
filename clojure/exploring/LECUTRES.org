@@ -213,3 +213,29 @@
 #
 # In clojure data is on the pedestal. It has powerful standard lib to work with
 # them. Event the code is data.
+
+# Any problem in computer science can be solved with another level of indirection. -- David Wheeler
+
+
+# Our intellectual powers are rather geared to master static relations and that
+# our powers to visualize processes evolving in time are relatively poorly
+# developed. For that reason we should do (as wise programmers aware of our
+# limitations) our utmost to shorten the conceptual gap between the static
+# program and the dynamic process, to make the correspondence between the
+# program (spread out in text space) and the process (spread out in time) as
+# trivial as possible.
+#
+#       Dijkstra (1968) "A Case against the GO TO Statement"
+
+# Processes over time to abstractions that makes the code look like it is
+# executed in the single point of time. It is what core.async tends to do or
+# react.
+
+# Future of JS frameworks as notes.
+
+# Clojure developers are always pragmatic and use the cool stuff that's already
+# done: JVM, Closure, Go rutines, ReactJS
+
+# OOP programmer will get data, move it to 3-4-5 classes introducing state in
+# all of them and work with those abstractions. FP programmer will just work
+# with the raw data and Clojure is especially powerful in that case.
