@@ -239,3 +239,9 @@
 # OOP programmer will get data, move it to 3-4-5 classes introducing state in
 # all of them and work with those abstractions. FP programmer will just work
 # with the raw data and Clojure is especially powerful in that case.
+
+# Why to use compiled to JS language as CLJS:
+#  - Produces highly effective code.
+#  - Gets out of your way if you want to do something preferment.
+#  - Clojure on the clinet.
+#  - repl, core.async, OM, core.logic, core.match

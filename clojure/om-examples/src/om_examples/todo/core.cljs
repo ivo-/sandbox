@@ -18,6 +18,12 @@
 (def app-state (atom {:items []}))
 (def input-chan (chan))
 
+;;; TODO: Gist front END app with core.async and om.
+;;; TODO: DOM core.async lib for producing channels.
+;;; TODO: user in profiles.clj and dev in project
+;;; app state is for business logic
+;;; owner state is for UX logic
+;;; owner is for local state and for refs
 (defn todo [app node]
   (reify
     om/IWillMount

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>ReactJS - Comment Box!</title>
+    </head>
+    <body>
+
+    </body>
+    <script src="http://fb.me/react-0.8.0.js"></script>
+    <script src="http://fb.me/JSXTransformer-0.8.0.js"></script>
+    <script type="text/jsx">
+     /** @jsx React.DOM */
+     var l = console.log.bind(console);
+     var A = React.createClass({
+         componentDidMount: function() { l("A did mount"); },
+         componentWillMount: function() { l("A will mount"); },
+         componentDidUpdate: function() { l("A did update"); },
+         componentWillUpdate: function() { l("A will update"); },
+         componentWillUnmount: function() { l("A will UNMOUNT"); },
+         componentWillReceiveProps: function() { l("A will receive new props"); },
+         handleClick: function() {
+             l(this.refs.field, " clicked");
+             /* this.refs.field.getDOMNode() */
+             this.setState(this.state);
+         },
+         render: function() {
+             l("Render A", this.props, this.state);
+             return <section id="A">
+                        <div className="children">{this.props.children}</div>
+                        <span ref="field" onClick={this.handleClick} type="text" placeholder={this.props.title}>
+                            Clickable span
+                        </span>
+                    </section>;
+         }
+     });
+
+     var B = React.createClass({
+         componentDidMount: function() { l("B did mount"); },
+         componentWillMount: function() { l("B will mount"); },
+         componentDidUpdate: function() { l("B did update"); },
+         componentWillUpdate: function() { l("B will update"); },
+         componentWillUnmount: function() { l("B will UNMOUNT"); },
+         componentWillReceiveProps: function() { l("B will receive new props"); },
+         render: function() {
+             l("Render B", this.props, this.state);
+             return <section id="B">
+                        <div className="children">{this.props.children}</div>
+                        <ul> {this.props.items.map(function(text, i){
+                               return <li key={i}>{text}</li>
+                             })} </ul>
+                    </section>;
+         }
+     });
+
+     var C = React.createClass({
+         componentDidMount: function() { l("C did mount"); },
+         componentWillMount: function() { l("C will mount"); },
+         componentDidUpdate: function() { l("C did update"); },
+         componentWillUpdate: function() { l("C will update"); },
+         componentWillUnmount: function() { l("C will UNMOUNT"); },
+         componentWillReceiveProps: function() { l("C will receive new props"); },
+         getInitialState: function() {
+             l("C has initial state");
+             return { items: ["Item 0",
+                              "Item 1",
+                              "Item 2"] };
+         },
+         addNewItem: function(item) {
+             var items = this.state.items;
+             items.push("Item " + items.length);
+             this.setState({items: items});
+         },
+         render: function() {
+             l("Render C", this.props, this.state);
+             return <section id="C">
+                        <h1>{this.props.msg}</h1>
+                        <A title="A title">A childrens</A>
+                        <B items={this.state.items}>B childrens</B>
+                    </section>;
+         }
+     });
+     var r = React.renderComponent(<C msg="Message to C" />, document.body);
+    </script>
+</html>

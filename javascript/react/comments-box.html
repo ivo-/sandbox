@@ -37,7 +37,7 @@
                  // want to maintain it or prevent passing it to other child
                  // during the reconciliation process, we should provide
                  // key={uid} attribute for each child at this level(sibling).
-                 return <li>{text}</li>
+                 return <li key={text}>{text}</li>
              });
 
              return <section>
