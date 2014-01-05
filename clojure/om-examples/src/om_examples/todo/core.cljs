@@ -24,8 +24,8 @@
 (def app-state (atom {:items []}))
 (def input-chan (chan))
 
-;;; Event listeners
 ;;; ------------------------------------------------------------------
+;;; Event listeners
 
 (defn on-value [node e app]
   (put! input-chan
@@ -41,7 +41,7 @@
 
 (defn on-delete [items e item]
   (om/update! items #(vec (remove #{(om/value item)} %)))
-  (.stopPropagation e))
+#_(.stopPropagation e))
 
 ;;; ------------------------------------------------------------------
 ;;; Components
