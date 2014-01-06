@@ -3,29 +3,92 @@
 ;;; TODO: Log them all with om
 ;;; TODO: show stats
 (ns om-examples.events
-  (:require [om.core :as om :include-macros true]
-            [om.dom :as dom :include-macros true]))
+  (:require [clojure.browser.repl :as repl]
+            [om.core :as om :include-macros true]
+            [om.dom :as dom :include-macros true]
+            [cljs.core.async :as async :refer [>! <! put! chan timeout]])
+  (:require-macros [cljs.core.async.macros :refer [go go-loop]])
+  (:import [goog.ui IdGenerator]))
 
-(defn on-delete [e item items]
-  (.log js/console js/arguments)
-  (om/update! items #(vec (remove #{(om/value item)} %))))
+(enable-console-print!)
+(repl/connect "http://localhost:9000/repl")
 
-(defn item [item node items]
+;;; ------------------------------------------------------------------
+;;; Data
+
+(deftype Event [id source text date])
+
+;;; ------------------------------------------------------------------
+;;; Helpers
+
+(defn now []
+  (int (/ (.getTime (java.util.Date.)) 1000)))
+
+(defn guid []
+  (.getNextUniqueId (.getInstance IdGenerator)))
+
+(defn log [& items]
+  (.log js/console (apply pr-str items)))
+
+;;; ------------------------------------------------------------------
+;;; Fake data
+
+(defn random-event [source]
+  (let [id (guid)]
+    (Event. id source (str "Event -> " id) (now))))
+
+(defn send-random-event [c source]
+  (go (while true
+        (<! (timeout (+ 200 (rand-int 3000))))
+        (>! c (random-event source)))))
+
+;;; ------------------------------------------------------------------
+;;; Streams
+
+(defn input-stream []
+  (let [c (chan)]
+    (send-random-event c :input)
+    c))
+
+(defn twitter-stream []
+  (let [c (chan)]
+    (send-random-event c :twitter)
+    c))
+
+(defn facebook-stream []
+  (let [c (chan)]
+    (send-random-event c :facebook)
+    c))
+
+(defn events-stream []
+  (async/merge [(input-stream)
+                (twitter-stream)
+                (facebook-stream)]))
+
+;;; ------------------------------------------------------------------
+;;; App
+
+(defn item [{:keys [text source]} node]
   (om/component
     (dom/li nil
-      (dom/a #js {:onClick (om/bind on-delete item items)}))))
+      text "(" (dom/strong nil  source) ")")))
 
-(defn app [cursor node]
+;; (defn statistic)
+
+(defn stream [app node]
   (reify
     om/IDidMount
     (did-mount [_ _]
-      (let [links (.call (.-slice js/Array.prototype)
-                    (.getElementsByTagName js/document "a"))]
-        (doseq [l links] (.click l))))
+      (let [s (events-stream)]
+        (go (while true
+              (let [e (<! s)]
+                ;; (om/transact! app [:events] )
+                nil)))))
+
     om/IRender
     (render [_]
       (dom/section nil
-        (om/build-all item (:items cursor)
-          {:opts (:items cursor)})))))
+        (dom/ul nil
+          (om/build-all item (:events app) {:key :id}))))))
 
-(om/root {:items [[1] [2] [3]]} app js/document.body)
+(om/root app-state {:events []} js/document.body)
