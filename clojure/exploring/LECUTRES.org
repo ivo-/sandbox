@@ -245,3 +245,12 @@
 #  - Gets out of your way if you want to do something preferment.
 #  - Clojure on the clinet.
 #  - repl, core.async, OM, core.logic, core.match
+
+# Two lectures about core.async separate on deep walking macros and how it is
+# implemented.
+
+# If you take the complexity of using compile-to-js language, at least it
+# should worth it.
+
+# Events to streams, compose them, make synthetic events and show how we don't
+# have a single callback anywhere.

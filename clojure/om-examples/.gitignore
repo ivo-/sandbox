@@ -11,3 +11,5 @@ pom.xml.asc
 /.nrepl-port
 
 todo.js
+events.js
+om41.js

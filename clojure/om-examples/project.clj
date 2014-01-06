@@ -23,6 +23,16 @@
              :source-paths ["src/om_examples/todo"]
              :compiler {:pretty-print true
                         :output-to "todo.js"
+                        :optimizations :whitespace}}
+            {:id "events"
+             :source-paths ["src/om_examples/events"]
+             :compiler {:pretty-print true
+                        :output-to "events.js"
+                        :optimizations :whitespace}}
+            {:id "om41"
+             :source-paths ["src/om_examples/om41"]
+             :compiler {:pretty-print true
+                        :output-to "om41.js"
                         :optimizations :whitespace}}]}
 
   :profiles {:uberjar {:aot :all}}
