@@ -41,7 +41,7 @@
 
 (defn on-delete [items e item]
   (om/update! items #(vec (remove #{(om/value item)} %)))
-#_(.stopPropagation e))
+  (.stopPropagation e))
 
 ;;; ------------------------------------------------------------------
 ;;; Components

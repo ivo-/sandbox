@@ -2,7 +2,6 @@
   (:require [om.core :as om :include-macros true]
             [om.dom :as dom :include-macros true]))
 
-(enable-console-print!)
 (defn on-delete [e item items]
   (.log js/console js/arguments)
   (om/update! items #(vec (remove #{(om/value item)} %))))
