@@ -1,41 +1,33 @@
-;;; TODO: make it super simple demo of async & om
-;;; TODO: twitter, facebook, so on events(100 in s)
-;;; TODO: Log them all with om
-;;; TODO: show stats
 (ns om-examples.events
-  (:require [clojure.browser.repl :as repl]
-            [om.core :as om :include-macros true]
+  (:require [om.core :as om :include-macros true]
             [om.dom :as dom :include-macros true]
             [cljs.core.async :as async :refer [>! <! put! chan timeout]])
   (:require-macros [cljs.core.async.macros :refer [go go-loop]])
   (:import [goog.ui IdGenerator]))
 
 (enable-console-print!)
-(repl/connect "http://localhost:9000/repl")
-
-;;; ------------------------------------------------------------------
-;;; Data
-
-(deftype Event [id source text date])
 
 ;;; ------------------------------------------------------------------
 ;;; Helpers
 
 (defn now []
-  (int (/ (.getTime (java.util.Date.)) 1000)))
+  (+ (js/Date.)))
 
 (defn guid []
   (.getNextUniqueId (.getInstance IdGenerator)))
 
-(defn log [& items]
-  (.log js/console (apply pr-str items)))
+(defn count-source [events source]
+  (count (filter #(= source (:source %)) events)))
 
 ;;; ------------------------------------------------------------------
 ;;; Fake data
 
 (defn random-event [source]
   (let [id (guid)]
-    (Event. id source (str "Event -> " id) (now))))
+    {:id     id
+     :source source
+     :text   (str "Event -> " id)
+     :date   (now)}))
 
 (defn send-random-event [c source]
   (go (while true
@@ -71,24 +63,31 @@
 (defn item [{:keys [text source]} node]
   (om/component
     (dom/li nil
-      text "(" (dom/strong nil  source) ")")))
+      text "(" (dom/strong nil (str source)) ")")))
 
-;; (defn statistic)
+(defn statistics [events node]
+  (om/component
+    (dom/table nil
+      (dom/tr nil
+        (dom/th nil "Input")
+        (dom/th nil "Twitter")
+        (dom/th nil "Facebook"))
+      (dom/tr nil
+        (dom/td nil (count-source events :input))
+        (dom/td nil (count-source events :twitter))
+        (dom/td nil (count-source events :facebook))))))
 
-(defn stream [app node]
+(defn stream [{:key [events]} node]
   (reify
     om/IDidMount
     (did-mount [_ _]
       (let [s (events-stream)]
         (go (while true
               (let [e (<! s)]
-                ;; (om/transact! app [:events] )
-                nil)))))
-
+                (om/transact! app [:events] conj e))))))
     om/IRender
     (render [_]
-      (dom/section nil
-        (dom/ul nil
-          (om/build-all item (:events app) {:key :id}))))))
+      (dom/section nil (om/build statistics events)
+        (dom/ul nil (om/build-all item events {:key :id}))))))
 
-(om/root app-state {:events []} js/document.body)
+(om/root {:events [(random-event :input)]} stream js/document.body)
