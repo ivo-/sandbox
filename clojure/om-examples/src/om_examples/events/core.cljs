@@ -77,7 +77,7 @@
         (dom/td nil (count-source events :twitter))
         (dom/td nil (count-source events :facebook))))))
 
-(defn stream [{:key [events]} node]
+(defn stream [app node]
   (reify
     om/IDidMount
     (did-mount [_ _]
@@ -87,7 +87,7 @@
                 (om/transact! app [:events] conj e))))))
     om/IRender
     (render [_]
-      (dom/section nil (om/build statistics events)
-        (dom/ul nil (om/build-all item events {:key :id}))))))
+      (dom/section nil (om/build statistics (:events app))
+        (dom/ul nil (om/build-all item (:events app) {:key :id}))))))
 
 (om/root {:events [(random-event :input)]} stream js/document.body)
