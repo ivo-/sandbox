@@ -61,8 +61,8 @@
 
    *Atom* is a *predicate* followed by a tuple of *terms*, where both
    *constants* and *variables* are terms. Every *fact* is an *atom* and *rule*
-   *consists from a group of atoms. If a tuple satisfies the predicate of the
-   *atom, we say that atom is true.
+   consists from a group of atoms. If a tuple satisfies the predicate of the
+   atom, we say that atom is true.
 
      *head* :- *body*           % Building blocks of a rule.
      *Atom* :- *Atom1*, *Atom2* % If Atom[1..n] is true then Atom is also true.
@@ -98,7 +98,7 @@
 *** Ground queries
 
     In response to a ground query Prolog systems scans the program looking for
-    the rule or fact whit heads which matches the predicate in the query. This
+    the rule or fact with heads which matches the predicate in the query. This
     search is always done top-bottom so the order of definitions matter. A match
     is found if the parameters to the query are identical to those of the head
     of a rule or if the corresponding parameter in the rule head is a variable.
@@ -110,7 +110,7 @@
     variable. Query is satisfiable relative to the program because there exists
     substitution for its variable, which makes the query true. Query is resolved
     by a series of substitutions walking trough the recursion tree and return
-    all found satisfiable results. Then we can choose Werther we want this
+    all found satisfiable results. Then we can choose weather we want this
     process to continue or currently found values are enough.
 
 ** Computation phases
@@ -122,12 +122,15 @@
      edge(a,X) -> edge(a,b) (a = a, X = b) => possible unification
 
    *Resolution* happens when an atom of the query has been unified with the head
-    of the rule(fact). It replaces the atom with the body of the rule(or
+    of the rule (fact). It replaces the atom with the body of the rule (or
     nothing, if fact) and then applies the substitution in order to produce the
     new query.
 
-    tedge(a,X) -> tedge(Node1,Node2) % unification (Node1 = a, X = Node2)
-    tedge(a,X) -> edge(a,SomeNode), edge(SomeNode,Node2) % substitution
+    % unification (Node1 = a, X = Node2)
+    tedge(a,X) -> tedge(Node1,Node2)
+
+    % substitution
+    tedge(a,X) -> edge(a,SomeNode), edge(SomeNode,Node2)
 
       edge(a,SomeNode) -> edge(a,b) % unification(SomeNode = b)
       edge(a,SomeNode) -> nothing   % substitution

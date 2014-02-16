@@ -6,13 +6,10 @@
 %% Workflow
 %% ----------------
 %%
-%% Load program:
+%% 1. Load program:
 %%    swipl -s ./dir/program.pl
-%%
-%% Edit program.pl:
-%%    emacsclient -t program.pl
-%%
-%% Realod all loaded and modified files:
+%% 2. Edit program.
+%% 3. Realod all loaded and modified files:
 %%    ?- make.
 %%
 %% Load file named 'first.pl':
@@ -21,7 +18,7 @@
 %% Trace the execution of predicates:
 %%    trace.
 %%      <return>      next
-%%      e             exti
+%%      e             exit
 %%
 %%    notrace.
 %%
@@ -29,13 +26,13 @@
 %% Queries
 %% ----------------
 %%
-%% ?- likes(sam, X).               % Makes query. We can only query in the repl.
-%% X = dahl ;                      %
-%% X = kurma ;                     % ; or space  - requests next answer
-%% X = tandoori .                  % . or return - terminates request
-%%                                 %
-%%                                 % If Prolog cannot find more answers, it writes
-%%                                 % false. Prolog can also answer with error message.
+%% ?- likes(sam, X).   % Makes query. We can only query in the repl.
+%% X = dahl ;          %
+%% X = kurma ;         % ; or space  - requests next answer
+%% X = tandoori .      % . or return - terminates request
+%%                     %
+%%                     % If Prolog cannot find more answers, it writes
+%%                     % false. Prolog can also answer with error message.
 %%
 %% ----------------
 %% Program[1]
@@ -102,40 +99,40 @@ path(Node1, Node2) :-
     edge(Node1, SomeNode),
     path(SomeNode, Node2).
 
-%% ----------------
+%% -------------------
 %% Build-in predicates
-%% ----------------
+%% -------------------
 
 %% Unification:
 %% ?- [X|[2,3]] = [1,2,3].
 
 %% Arithmetic:
-?- X is 3.       % Set or check X's value.
-?- 3*2 =:= 3+3.  % Evaluate and compare results.
+%% ?- X is 3.       % Set or check X's value.
+%% ?- 3*2 =:= 3+3.  % Evaluate and compare results.
 
-?- 9 >  4. %= true
-?- 9 >= 4. %= true
-?- 4 <  9. %= true
-?- 4 =< 9. %= true
-?- 4 == 4. %= true
+%% ?- 9 >  4. %= true
+%% ?- 9 >= 4. %= true
+%% ?- 4 <  9. %= true
+%% ?- 4 =< 9. %= true
+%% ?- 4 == 4. %= true
 
-?- X is 3  +  2. %= 5
-?- X is 3  -  2. %= 1
-?- X is 3  *  2. %= 6
-?- X is 3  /  2. %= 1.5
-?- X is 3 **  2. %= 9
-?- X is 3 //  2. %= 1
-?- X is 3 mod 2. %= 1
+%% ?- X is 3  +  2. %= 5
+%% ?- X is 3  -  2. %= 1
+%% ?- X is 3  *  2. %= 6
+%% ?- X is 3  /  2. %= 1.5
+%% ?- X is 3 **  2. %= 9
+%% ?- X is 3 //  2. %= 1
+%% ?- X is 3 mod 2. %= 1
 
-%% Debug:
+%% debug:
 %% ?- writeln(K)
 %% ?- writeln('|')
 
 %% All values should be generated outside of not!
-?- not((1 < 3, 5 > 2)).
+%% ?- not((1 < 3, 5 > 2)).
 
 %% Or:
-?- 1 < 3 ; 3 < 1.
+%% ?- 1 < 3 ; 3 < 1.
 
 %% ----------------
 %% Program[2]
@@ -178,4 +175,4 @@ chinese(sweet_and_sour).
 italian(pizza).
 italian(spaghetti).
 
-?- likes(sam,X).
+%% ?- likes(sam,X).
