@@ -1,42 +1,24 @@
-%% A list of lists is normal if it is longer than any of his elements. A list of
-%% lists is eccentric if it is normal, but none of its elements is normal.
-%%
-%% Define Prolog predicate q(L) that checks if list L has eccentric
-%% part(sublist).
+%% Rock-paper-scissors-lizard-Spock
 
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Solution
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-append([],Z,Z).
-append([X|L],Z,[X|R]) :- append(L,Z,R).
-
-member(L,X) :- append(_,[X|_],L).
-sublist(L,Z) :- append(_,K,L), append(Z,_,K).
-
-longer([_|_],[]).
-longer([_|L],[_|Z]) :- longer(L,Z).
-
-normal(L) :- not((member(L,X), not(longer(L,X)))).
-eccentric(L) :- normal(L), not((member(L,X),normal(X))).
-
-q(L) :- sublist(L,Z), longer(Z,[]), eccentric(Z).
-qq(L,Z) :- sublist(L,Z), longer(Z,[]), eccentric(Z).
+wins(scissors, cut, paper).
+wins(paper, covers, rock).
+wins(rock, crushes, lizard).
+wins(lizard, poisons, spock).
+wins(spock, smashes, scissors).
+wins(scissors, decapitate, lizard).
+wins(lizard, eats, paper).
+wins(paper, disproves, spock).
+wins(spock, vaporizes, rock).
+wins(rock, crushes, scissors).
 
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Tests
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-?- normal([[1],[2,3],[4,5,6],[7,8,9,10],[0]]).
-
-?- eccentric([[[1]],
-              [[2,2],[3]],
-              [[4,4,4],[5],[6]],
-              [[7,7,7,7],[8],[9],[10]],
-              [[0]]]).
-
-?- q([[[1],[1],[1]],
-      [[2,2],[3]],
-      [[4,4,4],[5],[6]],
-      [[7,7,7],[8],[9]],
-      [[0,0],[0]]]).
+?- wins(rock, A, scissors), writeln(A).
+?- wins(A, B, spock), writeln(A), writeln(B).
+?- wins(spock, A, B), writeln(A), writeln(B).
