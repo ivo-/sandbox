@@ -31,8 +31,8 @@
 %% ----------------------------------------------------------
 
 %% member(list,element).
-member([X|_],X).
-member([_|Q],X) :- member(Q,X).
+member([X|_],X).                %% (1)
+member([_|Q],X) :- member(Q,X). %% (2)
 
 %%
 %%      EXECUTION TREE
@@ -55,7 +55,7 @@ member([_|Q],X) :- member(Q,X).
 %%                            _ = []     false   false
 %%
 %% We can very clear distinguish *unification* and *resolution* phases.
-%% Backtracking is easy to track. nExecution engine will possibly try all the
+%% Backtracking is easy to track. Execution engine will possibly try all the
 %% solution until resolution fails in all the cases in member([],X) node.
 %%
 
