@@ -114,7 +114,7 @@ sublist([_,K],A) :- sublist(K,A).
 %%      sublist(L,A) :- append(_,A,K),append(K,_,L).
 %%
 
-%% in(L,X,Z) - Z contains all elements from Z + X
+%% in(L,X,Z) - Z contains all elements from L + X
 in(L,X,Z) :- append(L1,L2,L), append(L1,[X|L2],Z).
 
 %% perm(L,Z) - Z is permutation of L

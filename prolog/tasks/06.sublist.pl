@@ -1,4 +1,4 @@
-%% Reversed
+%% Sublist
 
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Dependencies
@@ -10,15 +10,21 @@
 %% Solution
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-reversed([X],[X]).
-reversed([X|L], R) :- reversed(L, S), append(S, [X], R).
+%% begins(L,B).
+begins(L,B) :- append(B, _, L).
+
+%% sublist(L,S).
+sublist(L,S) :- begins(L, S).
+sublist([_|L],S) :- sublist(L, S).
 
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Tests
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-?- reversed([1], [1]).
-?- reversed([1,2], [2,1]).
+?- begins([1,2,3,4], [1]).
+?- begins([1,2,3,4], [1,2]).
+?- begins([1,2,3,4], [1,2,3,4]).
 
-?- reversed([1,2,3,4], L), writeln(L).
-?- reversed(L, [1,2,3,4]), writeln(L).
+?- sublist([1,2,3,4], []).
+?- sublist([1,2,3,4], [2,3]).
+?- sublist([1,2,3,4], [1,2,3,4]).
