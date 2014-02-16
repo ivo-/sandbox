@@ -2,7 +2,7 @@
 %% lists is eccentric if it is normal, but none of its elements is normal.
 %%
 %% Define Prolog predicate q(L) that checks if list L has eccentric
-%% part(sublist).
+%% part (sublist).
 
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Solution
