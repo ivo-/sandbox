@@ -176,7 +176,3 @@ quick([Pivot|L],S) :- out(L, Pivot, E),
                       quick(Left, SLeft),
                       quick(Right, SRight),
                       append(SLeft, [X|SRight], S).
-
-%% ---------------------------------------------------------
-%% Merge
-%% ---------------------------------------------------------
