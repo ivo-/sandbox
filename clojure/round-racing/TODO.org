@@ -1,0 +1,28 @@
+
+* Implementation notes
+
+- fully dynamic workflow
+- component-entity-systems
+- custom physics
+- clojure and clojurescript interfaces
+- core.async, core.match
+- seesaw
+- tests
+- core.logic AI
+- multiplayer
+- overtone sounds
+- write the story
+- Box2D or custom physics?
+
+* Gameplay notes
+
+- 10 tours
+- 4 players levels
+- three game modes
+- special levels(4+ players)
+- each hero has different:
+  + special
+  + abilities
+  + strengths and weaknesses
+- map traps and features
+- unusual control(allow mastering)
