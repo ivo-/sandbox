@@ -1,0 +1,26 @@
+#!/usr/bin/env ruby
+
+# TODO: command-line arguments for chips, username, debug/real ...
+
+# require 'trollop'
+# parser = Trollop::Parser.new do
+# end
+
+require "rpoker"
+
+game      = Rpoker::Game::Holdem.new
+deck      = Rpoker::Deck::French.new.shuffle
+finder    = Rpoker::Finder::Holdem.new
+interface = Rpoker::Interface::Cli.new
+
+game.deck   = deck
+game.finder = finder
+
+game.players << Rpoker::Player::Human.new(:Al)
+game.players << Rpoker::Player::Human.new(:Nick)
+game.players << Rpoker::Player::Human.new(:John)
+game.players << Rpoker::Player::Human.new(:Nicole)
+
+Rpoker::GameLoop.new(game, interface).start
+
+exit(0) # .. and this is all we want
