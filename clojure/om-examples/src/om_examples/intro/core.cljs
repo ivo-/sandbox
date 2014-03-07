@@ -17,13 +17,18 @@
 
 ;; =============================================================================
 
-(def state (atom {:text "Hello world!"}))
+(def state (atom {:text "Hello Om!"
+                  :list ["Pink Floyd" "Beatles" "Oasis"]}))
 
 (defn widget [data owner]
   (reify
     om/IRender
     (render [this]
-      (dom/h1 nil (:text data)))))
+      (dom/section
+        nil
+        (dom/h1 nil (:text data))
+        (apply dom/ul nil
+          (map #(dom/li nil %) (:list data)))))))
 
 (om/root widget state
-  {:target (. js/document (getElementById "my-app"))})
+  {:target js/document.body})
