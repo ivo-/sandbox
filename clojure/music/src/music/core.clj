@@ -1,6 +1,38 @@
 (ns music.core)
 
-(defn foo
-  "I don't do a whole lot."
-  [x]
-  (println x "Hello, World!"))
+(use 'overtone.live)
+(use 'overtone.inst.piano)
+
+(comment
+
+  (piano 60)
+  (piano 73)
+  (piano 74)
+  (piano 75)
+  (piano 76)
+  (piano 77)
+  (piano 78)
+  (piano 79)
+  (piano 80)
+  (piano 81)
+  (piano 82)
+  (piano 83)
+  (piano 84)
+  (piano 85)
+  (piano 86)
+  (piano 87)
+  (piano 88)
+  (piano 89)
+  (piano 90)
+  (piano 91)
+  (piano 92)
+  (piano 93)
+  (piano 94)
+  (piano 95)
+  (piano 96)
+  (piano 97)
+  (piano 98)
+  (piano 99)
+  (piano 100)
+
+  )
