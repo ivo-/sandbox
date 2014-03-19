@@ -1,13 +1,14 @@
 (ns exploring.transients
-  "TODO:")
+  "Mutable variants of Clojure's data structures. The idiomatic usage is for
+  local mutation when performance should be improved.")
 
 (comment
-  ;; Transients are mutable, but they are used the same way as
-  ;; persistent data structures.
+
+  ;; Usage is very similar.
   (let [x (transient [1 2 3])]
     (persistent! (conj! x 4)))
 
-  ;; Transients are functions too.
+  ;; Transients are functions.
   ((transient [1 2 3]) 1)
 
   ;; Transients don't have value semantics.
@@ -20,9 +21,13 @@
       (= (count x) (count y))))
 
   ;; Changes on tranisents are faster and doesn't consume memory for
-  ;; older versions like persistent data structures.
-  (defn into-persistent [x y] (reduce conj x y))
-  (defn into-transient [x y] (persistent! (reduce conj! (transient x) y)))
+  ;; older versions like persistent data structures. This examples shows
+  ;; idiomatic transients code transformation.
+  (defn into-persistent [x y]
+    (reduce conj x y))
+  (defn into-transient [x y]
+    (persistent! (reduce conj! (transient x) y)))
+
   (time (dorun (into [] (range 1e4))))            ;;=> Elapsed time: 2.111204 msecs
   (time (dorun (into-persistent [] (range 1e4)))) ;;=> Elapsed time: 3.243993 msecs
   (time (dorun (into-transient [] (range 1e4))))  ;;=> Elapsed time: 1.985909 msecs
@@ -39,7 +44,9 @@
   ;; Idiomatic usage of transients for local optimization.
   (defn into [to from]
     (if (instance? clojure.lang.IEditableCollection to)
-      (with-meta (persistent! (reduce conj! (transient to) from)) (meta to))
+      (-> (reduce conj! (transient to) from)
+        (persistent!)
+        (with-meta (meta to)))
       (reduce conj to from)))
 
   ;; Transient coll is unusable after turning it into persistent.
@@ -47,7 +54,7 @@
     (persistent! x)
     (count x)) ;;=> Error!
 
-  ;; Tranisent doesn't support all functions from persistents.
+  ;; Transient structures doesn't support all clojure.core functions.
   (find (transient {:a 1 :b 2}) :a) ;;=> Error!
 
   ;; Transients cannot be used as mutable variables. When tranisent is
@@ -58,7 +65,7 @@
       (assoc! tm x 0))
     (persistent! tm))
 
-  ;; Tranisents can be used only on thread that created them.
+  ;; Tranisents should be used only by the thread that created them.
   (let [t (transient {})]
     @(future (get t :a)))
 
