@@ -59,15 +59,6 @@ a
 
 (eval `(let [name# "James Bond"]
          (prn "Bond, " name#)))
-;; ----------------------------------------------------------------------------
-;; Lazyfy macro
-
-(defmacro lazyfy
-  [& exprs]
-  `(map force (list ~@(for [expr exprs]
-                        `(delay ~expr)))))
-
-(macroexpand '(lazyfy (prn 1) (prn 2)))
 
 ;; ----------------------------------------------------------------------------
 ;; Macroexpand
@@ -101,7 +92,7 @@ macroexpand-all ;=> all levels
        (println form# "was not successful:" ~to-try))))
 
 ;; ----------------------------------------------------------------------------
-;; Double evaluation
+;; Errors
 
 ;;; Macro will not produce error for not defined symbols until it is used, in
 ;;; contrast with functions. Macros are executed at compile time and it
@@ -174,6 +165,6 @@ macroexpand-all ;=> all levels
 
 ;; Implement tail recursion variant of defn.
 ;; Bonus: leve call that are not in tail position (with if)
-;; parse and then transform
+;; Parse and transform play
 
 (clojure.walk/prewalk-replace {'a :aaa} '(a [[[[a [[a]]]]]]))
