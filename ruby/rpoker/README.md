@@ -1,4 +1,3 @@
-
 # Ruby Hold'em implementation.
 
-Currently no AI or other than cli interface.
+One of my first Ruby attempts.

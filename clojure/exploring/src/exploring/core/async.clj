@@ -34,7 +34,10 @@
    remain viable, and channels are oriented towards the flow aspects of a
    system, but they can be used to parallel work."
   (:require [clojure.core.async :refer :all]))
-
+(let [c (chan)]
+  (go
+    (>! c 10)
+    (prn (<! c))))
 ;;; Channels can be thought as blocking queues where values can be pushed or
 ;;; pulled in. By default pushing and pulling are blocking until value is
 ;;; consumed/provided. We can can use buffered(bounded) channels to make the

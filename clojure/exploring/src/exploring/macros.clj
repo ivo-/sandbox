@@ -160,11 +160,8 @@ macroexpand-all ;=> all levels
     (when (= (? item :active) nil)
       (! item :active false))))
 
-;; ============================================================================
-;; Deep walking macros
+;; =============================================================================
 
-;; Implement tail recursion variant of defn.
-;; Bonus: leve call that are not in tail position (with if)
-;; Parse and transform play
-
-(clojure.walk/prewalk-replace {'a :aaa} '(a [[[[a [[a]]]]]]))
+(scheme
+  ;;; ---
+  )
