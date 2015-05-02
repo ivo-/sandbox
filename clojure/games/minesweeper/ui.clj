@@ -1,5 +1,5 @@
-(ns game.ui
-  (:require [game.game :as g]
+(ns minesweeper.ui
+  (:require [minesweeper.game :as g]
             [clojure.string :refer [split]]))
 
 (defn new-board

@@ -1,6 +1,4 @@
-(ns game.test
-  (:require [clojure.set :refer [intersection]])
-  (:use clojure.test))
+(require '[clojure.set :refer [intersection]])
 
 (deftest task-03-test
   (testing "move"

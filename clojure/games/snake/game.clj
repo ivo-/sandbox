@@ -1,5 +1,4 @@
-(ns game.core
-  (:require [clojure.set :refer [difference]]))
+(require '[clojure.set :refer [difference]])
 
 (defn add-prize
   "Creates a prize in random point on the field."

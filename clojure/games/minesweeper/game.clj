@@ -1,4 +1,4 @@
-(ns game.game
+(ns minesweeper.game
   (:require [clojure.pprint :refer [pprint]]))
 
 (defn random-board

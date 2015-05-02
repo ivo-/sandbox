@@ -1,5 +1,5 @@
-(ns game.core
-  (:require [game.ui :as ui])
+(ns minesweeper.core
+  (:require [minesweeper.ui :as ui])
   (:gen-class))
 
 (defn -main
