@@ -1,0 +1,28 @@
+{
+  "name": "cows-vs-bulls",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "play-cli": "node src/cli/play.js",
+    "demo-cli": "node src/cli/demo.js",
+    "p2p-cli": "node src/cli/p2p.js",
+    "server": "node src/server/index.js",
+    "client": "react-scripts start",
+    "client-test": "react-scripts test --env=jsdom",
+    "test": "./node_modules/.bin/nodeunit ./src/**/*_test.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "eventsource": "^1.0.5",
+    "leveldown": "^2.1.1",
+    "levelup": "^2.0.1",
+    "node-fetch": "^1.7.3",
+    "nodeunit": "^0.11.2",
+    "prop-types": "^15.6.0",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-scripts": "0.9.5"
+  }
+}
